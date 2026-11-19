@@ -1,0 +1,967 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<link rel="icon" href="data:,">
+<title>Katalog &amp; Sistem Jahit UMKM — Atelier Nusantara</title>
+<style>
+  :root{
+    --canvas:#FAF8F5; --panel:#FFFFFF; --panel2:#F5F1EB; --ink:#1C1917; --ink2:#57534E; --ink3:#78716C;
+    --accent:#B45309; --accent-dark:#92400E; --accent-soft:#FEF3C7; --line:#E7E5E4; --line2:#D6D3D1;
+    --green:#15803D; --green-bg:#F0FDF4; --red:#B91C1C;
+    --serif:Georgia,'Times New Roman',Times,serif;
+    --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+    --mono:ui-monospace,'SF Mono',SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  *,*::before,*::after{box-sizing:border-box;}
+  html,body{height:100%;}
+  body{margin:0;padding:0;background:var(--canvas);color:var(--ink);font-family:var(--sans);font-size:14px;line-height:1.45;-webkit-font-smoothing:antialiased;}
+  button,[role="button"],select,input:not([type="checkbox"],[type="radio"]){min-height:2.25rem;}
+  button{font-family:var(--sans);cursor:pointer;}
+  input,select,textarea{font-family:var(--sans);font-size:14px;color:var(--ink);}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:1px;}
+
+  /* ============ SHELL: 100vw x 100vh, rata mentok ============ */
+  .app{display:grid;grid-template-rows:56px minmax(0,1fr);width:100vw;height:100vh;height:100dvh;overflow:hidden;background:var(--canvas);}
+  .main{display:grid;grid-template-columns:260px minmax(0,1fr) 380px;min-height:0;}
+
+  /* ============ HEADER ============ */
+  header{display:flex;align-items:stretch;gap:0;background:var(--panel);border-bottom:1px solid var(--line2);height:56px;min-height:56px;}
+  .brand{display:flex;align-items:center;gap:10px;padding:0 16px;border-right:1px solid var(--line);min-width:0;}
+  .brand-mark{width:34px;height:34px;flex:none;background:var(--ink);color:#FDE68A;display:flex;align-items:center;justify-content:center;border-radius:6px;}
+  .brand h1{font-family:var(--serif);font-size:15px;font-weight:700;letter-spacing:.04em;margin:0;white-space:nowrap;}
+  .brand p{margin:0;font-size:10.5px;color:var(--ink2);letter-spacing:.02em;white-space:nowrap;}
+  .tabs{display:flex;align-items:stretch;flex:none;}
+  .tab{border:0;background:transparent;padding:0 16px;font-size:13px;font-weight:600;color:var(--ink2);border-bottom:3px solid transparent;display:flex;align-items:center;gap:7px;min-height:56px;}
+  .tab:hover{color:var(--ink);background:var(--panel2);}
+  .tab.active{color:var(--accent-dark);border-bottom-color:var(--accent);background:#FFFBEB;}
+  .search-wrap{display:flex;align-items:center;flex:1;padding:0 14px;min-width:120px;}
+  .search-box{display:flex;align-items:center;gap:8px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:0 12px;width:100%;max-width:520px;height:38px;}
+  .search-box:focus-within{border-color:var(--accent);background:#fff;}
+  .search-box svg{flex:none;color:var(--ink3);}
+  .search-box input{border:0;background:transparent;outline:none;width:100%;min-height:0;height:36px;}
+  .queue{display:flex;align-items:center;gap:10px;padding:0 16px;border-left:1px solid var(--line);flex:none;}
+  .queue .dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px #DCFCE7;}
+  .queue b{font-family:var(--mono);font-size:15px;}
+  .queue span{font-size:11px;color:var(--ink2);line-height:1.25;}
+
+  /* ============ LEFT RAIL ============ */
+  .rail{background:var(--panel);border-right:1px solid var(--line);overflow-y:auto;min-height:0;display:flex;flex-direction:column;}
+  .rail-sec{padding:16px 16px 6px;}
+  .rail h2{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);margin:0 0 10px;font-weight:700;}
+  .cat-btn{display:flex;align-items:center;justify-content:space-between;width:100%;text-align:left;background:transparent;border:1px solid transparent;border-radius:8px;padding:9px 10px;font-size:13.5px;color:var(--ink);margin-bottom:2px;min-height:40px;}
+  .cat-btn:hover{background:var(--panel2);}
+  .cat-btn.active{background:var(--accent-soft);border-color:#FDE68A;color:var(--accent-dark);font-weight:700;}
+  .cat-btn .cnt{font-family:var(--mono);font-size:11px;background:var(--panel2);border:1px solid var(--line);border-radius:99px;padding:1px 8px;color:var(--ink2);}
+  .cat-btn.active .cnt{background:#fff;border-color:#FDE68A;color:var(--accent-dark);}
+  .check-row{display:flex;align-items:center;gap:9px;padding:7px 10px;border-radius:8px;cursor:pointer;font-size:13.5px;min-height:36px;}
+  .check-row:hover{background:var(--panel2);}
+  .check-row input{width:17px;height:17px;accent-color:var(--accent);flex:none;margin:0;}
+  .check-row .cnt{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--ink3);}
+  .radio-row{display:flex;align-items:center;gap:9px;padding:7px 10px;border-radius:8px;cursor:pointer;font-size:13.5px;min-height:36px;}
+  .radio-row:hover{background:var(--panel2);}
+  .radio-row input{width:17px;height:17px;accent-color:var(--accent);flex:none;margin:0;}
+  .workshop{margin:auto 12px 12px;background:var(--ink);color:#FAFAF9;border-radius:10px;padding:14px;}
+  .workshop h3{font-family:var(--serif);font-size:14px;margin:0 0 8px;color:#FDE68A;letter-spacing:.02em;}
+  .workshop .slot{display:flex;align-items:baseline;gap:8px;margin-bottom:6px;}
+  .workshop .slot b{font-family:var(--mono);font-size:26px;color:#fff;}
+  .workshop .slot span{font-size:12px;color:#D6D3D1;}
+  .slotbar{height:6px;background:#44403C;border-radius:99px;overflow:hidden;margin:4px 0 10px;}
+  .slotbar i{display:block;height:100%;width:33%;background:var(--accent);border-radius:99px;}
+  .workshop p{margin:0 0 5px;font-size:12px;color:#E7E5E4;line-height:1.5;}
+  .workshop p b{color:#fff;font-weight:600;}
+  .workshop .addr{color:#A8A29E;font-size:11.5px;}
+
+  /* ============ CENTER ============ */
+  .center{overflow-y:auto;min-height:0;min-width:0;background:var(--canvas);}
+  .center-head{padding:20px 22px 4px;display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px;}
+  .center-head h2{font-family:var(--serif);font-size:24px;margin:0 0 4px;font-weight:700;}
+  .center-head p{margin:0;color:var(--ink2);font-size:13px;max-width:560px;}
+  .sort-wrap{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink2);}
+  .sort-wrap select{border:1px solid var(--line2);border-radius:8px;background:#fff;padding:0 10px;height:38px;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(232px,1fr));gap:14px;padding:16px 22px 26px;}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;transition:border-color .15s, box-shadow .15s;}
+  .card:hover{border-color:var(--line2);box-shadow:0 6px 18px rgba(28,25,23,.07);}
+  .card.selected{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent),0 6px 18px rgba(180,83,9,.12);}
+  .card-art{height:158px;display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--line);position:relative;overflow:hidden;}
+  .card-art svg{height:138px;width:auto;}
+  .card-tag{position:absolute;top:10px;left:10px;background:rgba(255,255,255,.92);border:1px solid var(--line);border-radius:99px;font-size:10.5px;font-weight:700;letter-spacing:.04em;padding:3px 9px;color:var(--accent-dark);text-transform:uppercase;}
+  .card-xp{position:absolute;top:10px;right:10px;background:var(--ink);color:#FDE68A;border-radius:99px;font-size:10.5px;font-weight:700;padding:3px 9px;}
+  .card-body{padding:13px 14px 14px;display:flex;flex-direction:column;gap:7px;flex:1;}
+  .card-body h3{font-family:var(--serif);font-size:16px;margin:0;line-height:1.3;}
+  .card-body .desc{font-size:12.5px;color:var(--ink2);margin:0;line-height:1.5;}
+  .card-meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px;}
+  .chip{font-size:11px;background:var(--panel2);border:1px solid var(--line);border-radius:6px;padding:3px 8px;color:var(--ink2);font-family:var(--mono);}
+  .card-foot{margin-top:auto;padding-top:8px;border-top:1px dashed var(--line);display:flex;align-items:flex-end;justify-content:space-between;gap:8px;}
+  .price small{display:block;font-size:10px;color:var(--ink3);letter-spacing:.05em;text-transform:uppercase;}
+  .price b{font-family:var(--mono);font-size:15px;color:var(--accent-dark);}
+  .pick-btn{background:var(--ink);color:#fff;border:0;border-radius:8px;padding:0 13px;font-size:12.5px;font-weight:700;min-height:38px;white-space:nowrap;}
+  .pick-btn:hover{background:var(--accent-dark);}
+  .card.selected .pick-btn{background:var(--accent);}
+  .empty{grid-column:1/-1;text-align:center;padding:48px 20px;color:var(--ink2);}
+  .empty h3{font-family:var(--serif);font-size:19px;color:var(--ink);margin:0 0 6px;}
+  .empty button{margin-top:12px;background:#fff;border:1px solid var(--line2);border-radius:8px;padding:0 16px;font-weight:600;}
+
+  /* Kalkulator & Panduan views */
+  .view-pane{padding:20px 22px 30px;display:none;}
+  .view-pane.show{display:block;}
+  .calc-card,.guide-card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:20px;max-width:760px;}
+  .calc-card h2,.guide-card h2{font-family:var(--serif);font-size:22px;margin:0 0 6px;}
+  .calc-card>p,.guide-card>p{color:var(--ink2);margin:0 0 16px;font-size:13.5px;}
+  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  .field label{display:block;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink2);margin-bottom:5px;}
+  .field input,.field select{width:100%;border:1px solid var(--line2);border-radius:8px;padding:0 11px;height:40px;background:#fff;box-sizing:border-box;}
+  .field input:focus,.field select:focus{border-color:var(--accent);outline:none;}
+  .calc-result{margin-top:16px;background:var(--green-bg);border:1px solid #BBF7D0;border-radius:10px;padding:15px 16px;display:none;}
+  .calc-result.show{display:block;}
+  .calc-result .big{font-family:var(--mono);font-size:26px;font-weight:700;color:#166534;}
+  .calc-result p{margin:4px 0 0;font-size:13px;color:#14532D;line-height:1.55;}
+  table.size{width:100%;border-collapse:collapse;font-size:13px;margin-top:6px;}
+  table.size th{background:var(--ink);color:#FDE68A;text-align:left;padding:9px 10px;font-size:12px;letter-spacing:.03em;}
+  table.size td{padding:8px 10px;border-bottom:1px solid var(--line);font-family:var(--mono);}
+  table.size td:first-child{font-family:var(--sans);font-weight:700;}
+  table.size tr:hover td{background:var(--panel2);}
+  .guide-cols{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px;}
+  .guide-box{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:14px;}
+  .guide-box h3{font-family:var(--serif);font-size:15px;margin:0 0 8px;}
+  .guide-box ol,.guide-box ul{margin:0;padding-left:18px;font-size:13px;color:var(--ink2);line-height:1.7;}
+
+  /* ============ RIGHT WORKBENCH ============ */
+  .bench{background:var(--panel);border-left:1px solid var(--line2);overflow-y:auto;min-height:0;}
+  .bench-sec{padding:16px 18px;border-bottom:1px solid var(--line);}
+  .bench-sec h2{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);margin:0 0 12px;font-weight:700;display:flex;justify-content:space-between;align-items:center;}
+  .bench-sec h2 .live{color:var(--green);letter-spacing:0;text-transform:none;font-size:11px;font-weight:600;}
+  .preview{display:flex;gap:14px;align-items:center;}
+  .preview-art{width:118px;height:138px;flex:none;border:1px solid var(--line);border-radius:10px;display:flex;align-items:center;justify-content:center;overflow:hidden;transition:background .25s;}
+  .preview-art svg{height:124px;width:auto;}
+  .preview-info{min-width:0;}
+  .preview-info h3{font-family:var(--serif);font-size:17px;margin:0 0 3px;line-height:1.3;}
+  .preview-info p{margin:0 0 6px;font-size:12px;color:var(--ink2);line-height:1.5;}
+  .preview-info .mono{font-family:var(--mono);font-size:12px;color:var(--accent-dark);font-weight:700;}
+  .swatches{display:flex;gap:9px;margin-top:12px;flex-wrap:wrap;}
+  .swatch{width:46px;text-align:center;background:none;border:0;padding:0;min-height:0;}
+  .swatch .dotc{width:40px;height:40px;border-radius:50%;border:2px solid var(--line2);margin:0 auto 4px;display:block;transition:transform .12s,border-color .12s;}
+  .swatch:hover .dotc{transform:scale(1.08);}
+  .swatch.active .dotc{border-color:var(--accent);box-shadow:0 0 0 2px #fff,0 0 0 4px var(--accent);}
+  .swatch small{display:block;font-size:9.5px;color:var(--ink2);line-height:1.25;}
+  .preset-row{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;}
+  .preset{flex:1;border:1px solid var(--line2);background:#fff;border-radius:8px;font-weight:700;font-size:13px;min-height:38px;min-width:48px;}
+  .preset:hover{border-color:var(--accent);color:var(--accent-dark);}
+  .preset.active{background:var(--ink);color:#FDE68A;border-color:var(--ink);}
+  .meas-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .meas label{display:block;font-size:11px;font-weight:600;color:var(--ink2);margin-bottom:4px;}
+  .meas .inwrap{display:flex;align-items:center;border:1px solid var(--line2);border-radius:8px;background:#fff;overflow:hidden;}
+  .meas .inwrap:focus-within{border-color:var(--accent);}
+  .meas input{border:0;outline:none;width:100%;padding:0 10px;height:38px;font-family:var(--mono);font-size:14px;min-height:0;}
+  .meas .unit{font-size:11px;color:var(--ink3);padding-right:9px;font-family:var(--mono);}
+  .size-hint{margin-top:10px;font-size:12px;background:#FFFBEB;border:1px solid #FDE68A;border-radius:8px;padding:8px 11px;color:var(--accent-dark);display:none;}
+  .size-hint.show{display:block;}
+  .seg{display:flex;border:1px solid var(--line2);border-radius:9px;overflow:hidden;margin-bottom:10px;}
+  .seg button{flex:1;border:0;background:#fff;padding:9px 6px;font-size:12.5px;font-weight:600;color:var(--ink2);min-height:42px;line-height:1.3;}
+  .seg button.active{background:var(--ink);color:#fff;}
+  .seg button small{display:block;font-weight:400;font-size:10.5px;opacity:.75;}
+  .toggle-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;border:1px solid var(--line);border-radius:9px;background:var(--panel2);cursor:pointer;min-height:48px;}
+  .toggle-row b{font-size:13px;display:block;}
+  .toggle-row span{font-size:11.5px;color:var(--ink2);}
+  .toggle-row input{width:19px;height:19px;accent-color:var(--accent);flex:none;margin:0;}
+  .qty-row{display:flex;align-items:center;justify-content:space-between;margin-top:10px;}
+  .qty-row label{font-size:13px;font-weight:600;}
+  .qty-ctl{display:flex;align-items:center;gap:0;border:1px solid var(--line2);border-radius:8px;overflow:hidden;}
+  .qty-ctl button{width:38px;border:0;background:#fff;font-size:17px;font-weight:700;min-height:38px;}
+  .qty-ctl button:hover{background:var(--panel2);}
+  .qty-ctl output{width:40px;text-align:center;font-family:var(--mono);font-weight:700;font-size:15px;}
+  .bill{margin-top:14px;border:1px solid var(--line);border-radius:10px;overflow:hidden;}
+  .bill-row{display:flex;justify-content:space-between;gap:10px;padding:9px 13px;font-size:13px;border-bottom:1px dashed var(--line);}
+  .bill-row span{color:var(--ink2);}
+  .bill-row b{font-family:var(--mono);font-weight:600;text-align:right;}
+  .bill-total{display:flex;justify-content:space-between;align-items:center;padding:12px 13px;background:var(--ink);color:#fff;}
+  .bill-total span{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#D6D3D1;}
+  .bill-total b{font-family:var(--mono);font-size:19px;color:#FDE68A;}
+  .eta{font-size:12px;color:var(--ink2);margin-top:9px;text-align:center;}
+  .eta b{color:var(--ink);}
+  .bench .field{margin-bottom:10px;}
+  .bench .field input,.bench .field textarea{width:100%;border:1px solid var(--line2);border-radius:8px;padding:0 11px;height:40px;background:#fff;box-sizing:border-box;}
+  .bench .field textarea{height:auto;min-height:64px;padding:9px 11px;resize:vertical;}
+  .bench .field input:focus,.bench .field textarea:focus{border-color:var(--accent);outline:none;}
+  .wa-btn{width:100%;background:#16A34A;color:#fff;border:0;border-radius:10px;font-size:14.5px;font-weight:700;padding:13px 14px;display:flex;align-items:center;justify-content:center;gap:9px;min-height:50px;}
+  .wa-btn:hover{background:#15803D;}
+  .invoice-btn{width:100%;background:#fff;color:var(--ink);border:1px solid var(--line2);border-radius:10px;font-size:13.5px;font-weight:700;padding:11px 14px;margin-top:9px;min-height:46px;}
+  .invoice-btn:hover{border-color:var(--accent);color:var(--accent-dark);}
+  .form-err{display:none;background:#FEF2F2;border:1px solid #FECACA;color:var(--red);font-size:12.5px;border-radius:8px;padding:8px 11px;margin-bottom:10px;}
+  .form-err.show{display:block;}
+
+  /* ============ MODAL ============ */
+  .overlay{position:fixed;inset:0;background:rgba(28,25,23,.55);display:none;align-items:center;justify-content:center;padding:18px;z-index:60;}
+  .overlay.show{display:flex;}
+  .modal{background:#fff;border-radius:14px;width:100%;max-width:460px;max-height:calc(100vh - 36px);max-height:calc(100dvh - 36px);overflow-y:auto;box-shadow:0 24px 60px rgba(0,0,0,.3);}
+  .modal-head{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--line);}
+  .modal-head h2{font-family:var(--serif);font-size:18px;margin:0;}
+  .x-btn{border:1px solid var(--line);background:#fff;border-radius:8px;width:38px;height:38px;font-size:16px;flex:none;}
+  .receipt{padding:18px 20px;font-size:13px;}
+  .receipt .r-brand{text-align:center;border-bottom:2px dashed var(--line2);padding-bottom:12px;margin-bottom:12px;}
+  .receipt .r-brand h3{font-family:var(--serif);margin:0 0 2px;font-size:17px;letter-spacing:.05em;}
+  .receipt .r-brand p{margin:0;color:var(--ink2);font-size:11.5px;}
+  .r-row{display:flex;justify-content:space-between;gap:12px;padding:4.5px 0;}
+  .r-row span{color:var(--ink2);}
+  .r-row b{text-align:right;font-weight:600;}
+  .r-row .mono{font-family:var(--mono);}
+  .r-sep{border-top:1px dashed var(--line2);margin:9px 0;}
+  .r-total{display:flex;justify-content:space-between;align-items:center;background:var(--panel2);border-radius:8px;padding:11px 13px;margin-top:6px;}
+  .r-total b{font-family:var(--mono);font-size:17px;color:var(--accent-dark);}
+  .modal-actions{display:flex;gap:9px;padding:0 20px 18px;}
+  .modal-actions button{flex:1;border-radius:9px;font-weight:700;font-size:13.5px;padding:11px 8px;min-height:46px;}
+  .btn-copy{background:var(--ink);color:#fff;border:0;}
+  .btn-wa2{background:#16A34A;color:#fff;border:0;}
+  .btn-ghost{background:#fff;border:1px solid var(--line2);color:var(--ink);}
+  .toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:11px 18px;border-radius:99px;font-size:13.5px;font-weight:600;opacity:0;pointer-events:none;transition:all .25s;z-index:80;box-shadow:0 10px 30px rgba(0,0,0,.25);max-width:calc(100vw - 32px);text-align:center;}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width:1240px){ .main{grid-template-columns:230px minmax(0,1fr) 340px;} .brand p{display:none;} }
+  @media (max-width:960px){
+    .app{height:auto;min-height:100dvh;overflow:visible;display:block;}
+    header{flex-wrap:wrap;height:auto;min-height:56px;}
+    .brand{flex:1;border-right:0;padding:10px 14px;}
+    .queue{border-left:0;padding:10px 14px;}
+    .tabs{order:3;width:100%;border-top:1px solid var(--line);overflow-x:auto;}
+    .tab{flex:1;justify-content:center;min-height:46px;padding:0 8px;font-size:12px;white-space:nowrap;}
+    .search-wrap{order:4;width:100%;flex:none;padding:8px 14px 12px;border-top:1px solid var(--line);}
+    .search-box{max-width:none;}
+    .main{display:flex;flex-direction:column;}
+    .center{order:1;overflow:visible;}
+    .bench{order:2;border-left:0;border-top:2px solid var(--line2);overflow:visible;}
+    .rail{order:3;border-right:0;border-top:1px solid var(--line);overflow:visible;}
+    .grid{grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));padding:14px;}
+    .center-head,.view-pane{padding-left:14px;padding-right:14px;}
+    .form-grid,.guide-cols{grid-template-columns:1fr;}
+    .card-foot{flex-direction:column;align-items:stretch;}
+    .pick-btn{width:100%;white-space:normal;}
+    .search-wrap{box-sizing:border-box;}
+    .search-box{box-sizing:border-box;}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ================= HEADER ================= -->
+  <header>
+    <div class="brand">
+      <div class="brand-mark" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.6"/><circle cx="6" cy="18" r="2.6"/><path d="M8.2 7.8 20 19M8.2 16.2 20 5"/></svg>
+      </div>
+      <div>
+        <h1>ATELIER NUSANTARA</h1>
+        <p>Jahit Custom &amp; Seragam UMKM</p>
+      </div>
+    </div>
+    <nav class="tabs" aria-label="Navigasi utama">
+      <button class="tab active" data-tab="katalog" type="button">Katalog Model</button>
+      <button class="tab" data-tab="kalkulator" type="button">Kalkulator Kain &amp; Harga</button>
+      <button class="tab" data-tab="panduan" type="button">Panduan Ukuran</button>
+    </nav>
+    <div class="search-wrap">
+      <div class="search-box">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.8-3.8"/></svg>
+        <input id="searchInput" type="search" placeholder="Cari model… mis. batik, gamis, jas, permak" aria-label="Cari model jahitan">
+      </div>
+    </div>
+    <div class="queue" title="Pesanan yang sedang dikerjakan workshop">
+      <span class="dot" aria-hidden="true"></span>
+      <b id="queueCount">3</b>
+      <span>Antrean<br>Aktif</span>
+    </div>
+  </header>
+
+  <div class="main">
+    <!-- ================= LEFT RAIL ================= -->
+    <aside class="rail" aria-label="Filter katalog">
+      <div class="rail-sec">
+        <h2>Kategori Jahitan</h2>
+        <div id="catList"></div>
+      </div>
+      <div class="rail-sec">
+        <h2>Jenis Kain</h2>
+        <div id="fabricList"></div>
+      </div>
+      <div class="rail-sec">
+        <h2>Kecepatan Produksi</h2>
+        <label class="radio-row"><input type="radio" name="speed" value="semua" checked> Semua Kecepatan</label>
+        <label class="radio-row"><input type="radio" name="speed" value="reguler"> Reguler · 7–10 Hari</label>
+        <label class="radio-row"><input type="radio" name="speed" value="ekspres"> Ekspres · 3 Hari <span class="cnt" style="margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--ink3)">bisa kilat</span></label>
+      </div>
+      <div class="workshop">
+        <h3>Status Workshop</h3>
+        <div class="slot"><b>4</b><span>Slot Jahit Tersisa<br>Minggu Ini</span></div>
+        <div class="slotbar" aria-hidden="true"><i></i></div>
+        <p>Estimasi selesai pesanan baru: <b id="workshopEta">Rabu, 26 Nov 2026</b></p>
+        <p class="addr">Jl. Melati No. 12, Kel. Sukamaju, Kec. Cimahi Tengah — Buka Senin–Sabtu 08.00–17.00 WIB</p>
+      </div>
+    </aside>
+
+    <!-- ================= CENTER ================= -->
+    <section class="center" id="centerScroll">
+      <div id="viewKatalog">
+        <div class="center-head">
+          <div>
+            <h2 id="catalogTitle">Semua Model</h2>
+            <p id="catalogSub">12 model jahitan custom dari penjahit UMKM lokal — pilih model, atur ukuran badan di panel kanan, harga terhitung otomatis.</p>
+          </div>
+          <div class="sort-wrap">
+            <label for="sortSel">Urutkan</label>
+            <select id="sortSel">
+              <option value="rekomendasi">Rekomendasi</option>
+              <option value="murah">Ongkos Termurah</option>
+              <option value="mahal">Ongkos Termahal</option>
+              <option value="cepat">Pengerjaan Tercepat</option>
+            </select>
+          </div>
+        </div>
+        <div class="grid" id="catalogGrid"></div>
+      </div>
+
+      <div class="view-pane" id="viewKalkulator">
+        <div class="calc-card">
+          <h2>Kalkulator Kebutuhan Kain</h2>
+          <p>Masukkan tinggi &amp; berat badan serta model yang diinginkan. Kalkulator memperkirakan kebutuhan kain (lebar kain standar 115 cm) dan estimasi total biaya bila kain dibeli dari penjahit.</p>
+          <div class="form-grid">
+            <div class="field"><label for="calcHeight">Tinggi Badan (cm)</label><input id="calcHeight" type="number" min="120" max="210" value="165" inputmode="numeric"></div>
+            <div class="field"><label for="calcWeight">Berat Badan (kg)</label><input id="calcWeight" type="number" min="30" max="150" value="60" inputmode="numeric"></div>
+            <div class="field"><label for="calcModel">Model Jahitan</label><select id="calcModel"></select></div>
+            <div class="field"><label for="calcFabric">Jenis Kain</label>
+              <select id="calcFabric">
+                <option value="katun">Katun Primisima — Rp 65.000/m</option>
+                <option value="toyobo">Toyobo — Rp 55.000/m</option>
+                <option value="linen">Linen Rami — Rp 85.000/m</option>
+                <option value="drill">Wool Drill — Rp 95.000/m</option>
+                <option value="silk">Silk Satin — Rp 120.000/m</option>
+              </select>
+            </div>
+          </div>
+          <button class="wa-btn" id="calcBtn" type="button" style="background:var(--accent);margin-top:14px">Hitung Kebutuhan Kain</button>
+          <div class="calc-result" id="calcResult" role="status"></div>
+          <p style="font-size:12px;color:var(--ink3);margin:14px 0 0">Catatan: hasil adalah estimasi awal untuk lebar kain 115 cm. Kain bermotif (batik) biasanya butuh tambahan 0,2–0,3 m untuk menyelaraskan motif. Penjahit akan mengonfirmasi ukuran final saat pengukuran.</p>
+        </div>
+      </div>
+
+      <div class="view-pane" id="viewPanduan">
+        <div class="guide-card">
+          <h2>Panduan Ukuran Standar</h2>
+          <p>Tabel ukuran standar Atelier Nusantara (dalam cm). Klik preset S–XXL di panel kanan untuk mengisi ukuran ini otomatis, lalu sesuaikan bila perlu.</p>
+          <table class="size">
+            <thead><tr><th>Ukuran</th><th>Lingkar Dada</th><th>Lebar Bahu</th><th>Pjg. Lengan</th><th>Lkr. Pinggang</th><th>Pjg. Baju</th></tr></thead>
+            <tbody>
+              <tr><td>S</td><td>88</td><td>40</td><td>56</td><td>76</td><td>68</td></tr>
+              <tr><td>M</td><td>96</td><td>43</td><td>58</td><td>84</td><td>70</td></tr>
+              <tr><td>L</td><td>104</td><td>46</td><td>60</td><td>92</td><td>72</td></tr>
+              <tr><td>XL</td><td>112</td><td>48</td><td>62</td><td>100</td><td>74</td></tr>
+              <tr><td>XXL</td><td>120</td><td>51</td><td>64</td><td>110</td><td>76</td></tr>
+            </tbody>
+          </table>
+          <div class="guide-cols">
+            <div class="guide-box">
+              <h3>Cara Mengukur di Rumah</h3>
+              <ol>
+                <li><b>Lingkar Dada</b> — lingkarkan meteran di dada paling penuh, jangan terlalu ketat.</li>
+                <li><b>Lebar Bahu</b> — ukur dari ujung bahu kiri ke ujung bahu kanan lewat punggung.</li>
+                <li><b>Panjang Lengan</b> — dari ujung bahu turun sampai pergelangan tangan.</li>
+                <li><b>Lingkar Pinggang</b> — lingkarkan meteran di pinggang alami (di atas pusar).</li>
+                <li><b>Panjang Baju</b> — dari bahu tertinggi turun sampai panjang yang diinginkan.</li>
+              </ol>
+            </div>
+            <div class="guide-box">
+              <h3>Tips Agar Pas Badan</h3>
+              <ul>
+                <li>Ukur memakai baju tipis, berdiri tegak dan bernapas normal.</li>
+                <li>Tambahkan kelonggaran 4–6 cm dari ukuran pas badan untuk model reguler.</li>
+                <li>Untuk gamis, panjang baju standar 135–140 cm — tulis di catatan pesanan.</li>
+                <li>Ragu di antara dua ukuran? Pilih yang lebih besar, lebih mudah dikecilkan.</li>
+                <li>Pengukuran ulang gratis di workshop sebelum kain dipotong.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= RIGHT WORKBENCH ================= -->
+    <aside class="bench" aria-label="Panel custom order dan ukuran">
+      <div class="bench-sec">
+        <h2>Model Terpilih <span class="live">● Live Preview</span></h2>
+        <div class="preview">
+          <div class="preview-art" id="previewArt"></div>
+          <div class="preview-info">
+            <h3 id="pvName">—</h3>
+            <p id="pvDesc">—</p>
+            <span class="mono" id="pvMeta">—</span>
+          </div>
+        </div>
+        <div class="swatches" id="swatches" role="group" aria-label="Pilih warna dan bahan"></div>
+        <p style="font-size:12px;color:var(--ink2);margin:10px 0 0">Bahan aktif: <b id="pvFabricName" style="color:var(--ink)">—</b></p>
+      </div>
+
+      <div class="bench-sec">
+        <h2>Ukuran Badan (cm)</h2>
+        <div class="preset-row" id="presetRow" role="group" aria-label="Preset ukuran standar">
+          <button class="preset" data-size="S" type="button">S</button>
+          <button class="preset active" data-size="M" type="button">M</button>
+          <button class="preset" data-size="L" type="button">L</button>
+          <button class="preset" data-size="XL" type="button">XL</button>
+          <button class="preset" data-size="XXL" type="button">XXL</button>
+        </div>
+        <div class="meas-grid">
+          <div class="meas"><label for="mDada">Lingkar Dada</label><div class="inwrap"><input id="mDada" type="number" min="60" max="160" value="96" inputmode="numeric"><span class="unit">cm</span></div></div>
+          <div class="meas"><label for="mBahu">Lebar Bahu</label><div class="inwrap"><input id="mBahu" type="number" min="30" max="70" value="43" inputmode="numeric"><span class="unit">cm</span></div></div>
+          <div class="meas"><label for="mLengan">Panjang Lengan</label><div class="inwrap"><input id="mLengan" type="number" min="30" max="80" value="58" inputmode="numeric"><span class="unit">cm</span></div></div>
+          <div class="meas"><label for="mPinggang">Lingkar Pinggang</label><div class="inwrap"><input id="mPinggang" type="number" min="50" max="160" value="84" inputmode="numeric"><span class="unit">cm</span></div></div>
+          <div class="meas"><label for="mPanjang">Panjang Baju</label><div class="inwrap"><input id="mPanjang" type="number" min="50" max="160" value="70" inputmode="numeric"><span class="unit">cm</span></div></div>
+          <div class="meas"><label for="mPinggul">Lingkar Pinggul</label><div class="inwrap"><input id="mPinggul" type="number" min="60" max="170" value="100" inputmode="numeric"><span class="unit">cm</span></div></div>
+        </div>
+        <div class="size-hint" id="sizeHint" role="status"></div>
+      </div>
+
+      <div class="bench-sec">
+        <h2>Estimasi Harga <span class="live">Terhitung Otomatis</span></h2>
+        <div class="seg" role="group" aria-label="Sumber kain">
+          <button type="button" id="segOwn" class="active">Bawa Kain Sendiri<small>hanya bayar ongkos jahit</small></button>
+          <button type="button" id="segShop">Kain dari Penjahit<small>termasuk biaya bahan</small></button>
+        </div>
+        <label class="toggle-row">
+          <span><b>Layanan Ekspres 3 Hari</b><span>Prioritas antrean · +50% ongkos jahit</span></span>
+          <input type="checkbox" id="expressToggle">
+        </label>
+        <div class="qty-row">
+          <label for="qtyOut">Jumlah Pesanan</label>
+          <div class="qty-ctl">
+            <button type="button" id="qtyMinus" aria-label="Kurangi jumlah">−</button>
+            <output id="qtyOut">1</output>
+            <button type="button" id="qtyPlus" aria-label="Tambah jumlah">+</button>
+          </div>
+        </div>
+        <div class="bill" id="bill"></div>
+        <p class="eta" id="etaLine"></p>
+      </div>
+
+      <div class="bench-sec" style="border-bottom:0">
+        <h2>Data Pemesan</h2>
+        <div class="form-err" id="formErr" role="alert"></div>
+        <div class="field"><label for="custName">Nama Pemesan *</label><input id="custName" type="text" placeholder="cth. Ibu Ratna Wulandari" autocomplete="name"></div>
+        <div class="field"><label for="deadline">Target Tanggal Selesai *</label><input id="deadline" type="date"></div>
+        <div class="field"><label for="notes">Catatan Custom</label><textarea id="notes" placeholder="cth. Kerah shanghai, saku dalam, kancing bungkus…"></textarea></div>
+        <button class="wa-btn" id="waBtn" type="button">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.6-6.1c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4 0-.5.2-.8l.5-.6c.1-.2.1-.4 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.9 3 4.7 4.2.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.5-.6 1.7-1.3.2-.6.2-1.2.2-1.3-.1-.1-.2-.2-.5-.3z"/></svg>
+          Kirim Pesanan ke WhatsApp Penjahit
+        </button>
+        <button class="invoice-btn" id="invoiceBtn" type="button">Lihat Invoice &amp; Struk Digital</button>
+        <p style="font-size:11.5px;color:var(--ink3);text-align:center;margin:10px 0 2px">DP 50% dibayar setelah penjahit mengonfirmasi slot &amp; ukuran via WhatsApp.</p>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<!-- ================= INVOICE MODAL ================= -->
+<div class="overlay" id="invoiceOverlay" role="dialog" aria-modal="true" aria-labelledby="invTitle">
+  <div class="modal">
+    <div class="modal-head">
+      <h2 id="invTitle">Invoice &amp; Struk Digital</h2>
+      <button class="x-btn" id="invClose" type="button" aria-label="Tutup invoice">✕</button>
+    </div>
+    <div class="receipt" id="receiptBody"></div>
+    <div class="modal-actions">
+      <button class="btn-copy" id="copyBtn" type="button">Salin Ringkasan</button>
+      <button class="btn-wa2" id="waBtn2" type="button">Kirim via WhatsApp</button>
+      <button class="btn-ghost" id="invDone" type="button">Tutup</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(function(){
+'use strict';
+var WA_NUMBER = '6281234567890';
+var rp = function(n){ return 'Rp ' + Math.round(n).toLocaleString('id-ID'); };
+
+var FABRICS = {
+  katun:  { name:'Katun Primisima', price:65000 },
+  linen:  { name:'Linen Rami',      price:85000 },
+  silk:   { name:'Silk Satin',      price:120000 },
+  drill:  { name:'Wool Drill',      price:95000 },
+  toyobo: { name:'Toyobo',          price:55000 }
+};
+
+var CATEGORIES = [
+  { id:'semua',   label:'Semua Model' },
+  { id:'batik',   label:'Batik & Kebaya Modern' },
+  { id:'kemeja',  label:'Kemeja & Seragam Kantor' },
+  { id:'gamis',   label:'Gamis & Busana Muslim' },
+  { id:'jas',     label:'Jas & Blazer Custom' },
+  { id:'permak',  label:'Permak & Vermak Kilat' }
+];
+var CAT_LABEL = {}; CATEGORIES.forEach(function(c){ CAT_LABEL[c.id]=c.label; });
+
+/* type: shirt|kebaya|dress|uniform|blouse|gamis|abaya|suit|blazer|permak */
+var ITEMS = [
+  { id:1,  name:'Kemeja Batik Mega Mendung', cat:'batik',  fabric:'katun',  fee:125000, days:7,  meters:2.5, express:true,  type:'shirt',   color:'#7F1D1D', bg:'#FEF2F2', desc:'Batik tulis motif mega mendung, furing katun adem, kancing sembunyi. Favorit untuk acara kantor & kondangan.' },
+  { id:2,  name:'Kebaya Kartini Brokat Modern', cat:'batik', fabric:'silk', fee:185000, days:10, meters:2.0, express:false, type:'kebaya',  color:'#9D174D', bg:'#FDF2F8', desc:'Kebaya kutubaru brokat premium dengan payet halus di leher, potongan kartini yang anggun.' },
+  { id:3,  name:'Dress Batik A-Line Kondangan', cat:'batik', fabric:'katun', fee:135000, days:7, meters:2.8, express:true,  type:'dress',   color:'#92400E', bg:'#FFFBEB', desc:'Dress batik potongan A-line dengan tali pinggang, resleting belakang, saku samping tersembunyi.' },
+  { id:4,  name:'Kemeja Polos Slim Fit Kantor', cat:'kemeja', fabric:'toyobo', fee:85000, days:7, meters:2.0, express:true,  type:'shirt',   color:'#1E3A5F', bg:'#EFF6FF', desc:'Kemeja kerja slim fit anti kusut, kerah tegak rapi, cocok untuk seragam harian kantor.' },
+  { id:5,  name:'Seragam PDH / PDL + Bordir Nama', cat:'kemeja', fabric:'drill', fee:110000, days:10, meters:2.2, express:false, type:'uniform', color:'#3F6212', bg:'#F7FEE7', desc:'Seragam dinas bahan drill tebal, termasuk bordir nama & logo dada. Harga grosir untuk ≥ 10 pcs.' },
+  { id:6,  name:'Blus Kantor Linen Santai', cat:'kemeja', fabric:'linen', fee:95000, days:7, meters:1.8, express:true,  type:'blouse',  color:'#A3B18A', bg:'#F7F8F0', desc:'Blus linen rami adem dengan kancing batok kelapa, lengan 3/4, nyaman untuk iklim tropis.' },
+  { id:7,  name:'Gamis Syar’i Polos Premium', cat:'gamis', fabric:'silk', fee:165000, days:10, meters:3.5, express:false, type:'gamis',   color:'#5B21B6', bg:'#F5F3FF', desc:'Gamis syar’i jatuh elegan, busui friendly, wudhu friendly, potongan longgar tidak menerawang.' },
+  { id:8,  name:'Gamis Linen Casual Harian', cat:'gamis', fabric:'linen', fee:145000, days:7, meters:3.0, express:true,  type:'gamis',   color:'#588157', bg:'#F0FDF4', desc:'Gamis linen adem untuk harian & pengajian, saku kanan-kiri, tali serut pinggang adjustable.' },
+  { id:9,  name:'Abaya Toyobo Hitam Elegan', cat:'gamis', fabric:'toyobo', fee:150000, days:10, meters:3.2, express:false, type:'abaya',   color:'#292524', bg:'#F5F5F4', desc:'Abaya toyobo hitam pekat tidak mudah kusut, detail bordir minimalis di ujung lengan.' },
+  { id:10, name:'Jas Formal Full Furing', cat:'jas', fabric:'drill', fee:350000, days:10, meters:3.0, express:false, type:'suit',    color:'#1C1917', bg:'#F5F5F4', desc:'Jas formal full furing & padding bahu terstruktur, fitting 2x, untuk wisuda, lamaran & pernikahan.' },
+  { id:11, name:'Blazer Casual Wanita', cat:'jas', fabric:'linen', fee:225000, days:7, meters:2.2, express:true,  type:'blazer',  color:'#B45309', bg:'#FFFBEB', desc:'Blazer casual separuh furing, potongan relaxed, saku paspoal, serbaguna untuk kerja & acara.' },
+  { id:12, name:'Permak & Vermak Kilat', cat:'permak', fabric:'toyobo', fee:35000, days:3, meters:0, express:true,  type:'permak',  color:'#0F766E', bg:'#F0FDF9', desc:'Kecilkan celana, potong gamis, ganti resleting, tambal sobek. Tanpa kain baru — bawa pakaianmu saja.' }
+];
+
+var SWATCHES = [
+  { id:'maroon',   name:'Maroon Batik',   fabric:'katun', color:'#7F1D1D', pattern:'batik' },
+  { id:'navy',     name:'Navy Drill',     fabric:'drill', color:'#1E3A5F', pattern:'plain' },
+  { id:'sage',     name:'Sage Linen',     fabric:'linen', color:'#A3B18A', pattern:'weave' },
+  { id:'cream',    name:'Cream Silk',     fabric:'silk',  color:'#D9B98A', pattern:'sheen' },
+  { id:'charcoal', name:'Charcoal Wool',  fabric:'drill', color:'#292524', pattern:'weave' }
+];
+
+var PRESETS = {
+  S:  { dada:88,  bahu:40, lengan:56, pinggang:76,  panjang:68,  pinggul:94 },
+  M:  { dada:96,  bahu:43, lengan:58, pinggang:84,  panjang:70,  pinggul:100 },
+  L:  { dada:104, bahu:46, lengan:60, pinggang:92,  panjang:72,  pinggul:106 },
+  XL: { dada:112, bahu:48, lengan:62, pinggang:100, panjang:74,  pinggul:112 },
+  XXL:{ dada:120, bahu:51, lengan:64, pinggang:110, panjang:76,  pinggul:120 }
+};
+
+var state = {
+  cat:'semua', fabrics:{}, speed:'semua', search:'', sort:'rekomendasi',
+  item: ITEMS[0], swatch: SWATCHES[0], ownFabric:true, express:false, qty:1,
+  queue: 3, orderNo: 1042
+};
+
+/* ---------- SVG garment illustrations ---------- */
+function patDef(id, color, pattern){
+  if(pattern==='batik') return '<pattern id="'+id+'" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="16" height="16" fill="'+color+'"/><circle cx="4" cy="4" r="2.2" fill="rgba(255,255,255,.35)"/><circle cx="12" cy="12" r="2.2" fill="rgba(253,230,138,.5)"/></pattern>';
+  if(pattern==='weave') return '<pattern id="'+id+'" width="7" height="7" patternUnits="userSpaceOnUse"><rect width="7" height="7" fill="'+color+'"/><path d="M0 3.5H7M3.5 0V7" stroke="rgba(255,255,255,.22)" stroke-width="1"/></pattern>';
+  if(pattern==='sheen') return '<linearGradient id="'+id+'" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="'+color+'"/><stop offset=".5" stop-color="#F5E7CE"/><stop offset="1" stop-color="'+color+'"/></linearGradient>';
+  return '';
+}
+function garmentSVG(type, color, pattern, uid){
+  var fill = pattern==='plain' ? color : 'url(#p'+uid+')';
+  var head = '<svg viewBox="0 0 120 150" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true"><defs>'+patDef('p'+uid,color,pattern)+'</defs>';
+  var dark = 'rgba(0,0,0,.28)', line = 'stroke="'+dark+'" stroke-width="1.6" fill="none" stroke-linecap="round"';
+  var body = '';
+  if(type==='kebaya'){
+    body = '<path d="M42 18 L60 30 L78 18 L86 30 L80 52 L84 128 L36 128 L40 52 L34 30 Z" fill="'+fill+'" '+line+'/><path d="M60 30 L52 128 M60 30 L68 128" '+line+'/><circle cx="60" cy="48" r="2.4" fill="#FDE68A"/><circle cx="58" cy="66" r="2.4" fill="#FDE68A"/><circle cx="57" cy="84" r="2.4" fill="#FDE68A"/><path d="M36 112 H84" '+line+'/>';
+  } else if(type==='dress'){
+    body = '<path d="M44 16 L60 26 L76 16 L84 28 L74 50 L90 130 L30 130 L46 50 L36 28 Z" fill="'+fill+'" '+line+'/><path d="M46 62 H74" '+line+'/><path d="M38 104 H82" stroke="rgba(255,255,255,.4)" stroke-width="2" fill="none"/>';
+  } else if(type==='gamis' || type==='abaya'){
+    body = '<path d="M45 14 L60 24 L75 14 L88 26 L82 56 L88 136 L32 136 L38 56 L32 26 Z" fill="'+fill+'" '+line+'/><path d="M60 24 V136" '+line+'/><path d="M40 84 H80" '+line+'/><circle cx="60" cy="40" r="2.2" fill="rgba(255,255,255,.7)"/><circle cx="60" cy="54" r="2.2" fill="rgba(255,255,255,.7)"/>';
+  } else if(type==='suit' || type==='blazer'){
+    body = '<path d="M40 16 L60 28 L80 16 L90 28 L84 60 L86 132 L34 132 L36 60 L30 28 Z" fill="'+fill+'" '+line+'/><path d="M48 18 L60 62 L72 18 L60 28 Z" fill="rgba(255,255,255,.9)" stroke="'+dark+'"/><path d="M48 18 L60 62 M72 18 L60 62" '+line+'/><path d="M38 92 H54 M66 92 H82" '+line+'/><circle cx="60" cy="76" r="2.4" fill="#FDE68A"/>';
+  } else if(type==='uniform'){
+    body = '<path d="M42 16 L60 26 L78 16 L88 28 L82 56 L84 130 L36 130 L38 56 L32 28 Z" fill="'+fill+'" '+line+'/><path d="M60 26 V130" '+line+'/><path d="M42 46 H54 V58 H42 Z M66 46 H78 V58 H66 Z" fill="rgba(255,255,255,.25)" stroke="'+dark+'"/><path d="M40 74 H80" '+line+'/><rect x="50" y="34" width="20" height="6" rx="2" fill="#FDE68A"/>';
+  } else if(type==='blouse'){
+    body = '<path d="M44 16 L60 28 L76 16 L86 30 L78 58 L80 118 L40 118 L42 58 L34 30 Z" fill="'+fill+'" '+line+'/><path d="M60 28 V118" '+line+'/><circle cx="60" cy="46" r="2.2" fill="rgba(0,0,0,.4)"/><circle cx="60" cy="62" r="2.2" fill="rgba(0,0,0,.4)"/><circle cx="60" cy="78" r="2.2" fill="rgba(0,0,0,.4)"/><circle cx="60" cy="94" r="2.2" fill="rgba(0,0,0,.4)"/>';
+  } else if(type==='permak'){
+    body = '<path d="M38 20 H82 L78 66 L74 132 H58 L60 78 L62 132 H46 L42 66 Z" fill="'+fill+'" '+line+'/><path d="M38 34 H82 M46 52 H54 M66 52 H74" '+line+'/><circle cx="98" cy="34" r="5" fill="none" stroke="'+color+'" stroke-width="2.4"/><circle cx="98" cy="62" r="5" fill="none" stroke="'+color+'" stroke-width="2.4"/><path d="M94 39 L84 58" stroke="'+color+'" stroke-width="2.4" stroke-linecap="round"/>';
+  } else { /* shirt */
+    body = '<path d="M42 16 L60 26 L78 16 L88 28 L82 56 L84 130 L36 130 L38 56 L32 28 Z" fill="'+fill+'" '+line+'/><path d="M50 16 L60 28 L70 16 L60 22 Z" fill="rgba(255,255,255,.35)" stroke="'+dark+'"/><path d="M60 28 V130" '+line+'/><circle cx="60" cy="44" r="2.1" fill="rgba(255,255,255,.85)"/><circle cx="60" cy="60" r="2.1" fill="rgba(255,255,255,.85)"/><circle cx="60" cy="76" r="2.1" fill="rgba(255,255,255,.85)"/><circle cx="60" cy="92" r="2.1" fill="rgba(255,255,255,.85)"/><path d="M66 48 H78 V60 H66 Z" fill="rgba(255,255,255,.22)" stroke="'+dark+'"/>';
+  }
+  return head + body + '</svg>';
+}
+
+/* ---------- Helpers ---------- */
+function $(id){ return document.getElementById(id); }
+function esc(s){ return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
+function toast(msg){
+  var t = $('toast'); t.textContent = msg; t.classList.add('show');
+  clearTimeout(t._h); t._h = setTimeout(function(){ t.classList.remove('show'); }, 2600);
+}
+function fmtDate(d){
+  return d.toLocaleDateString('id-ID',{ weekday:'long', day:'numeric', month:'short', year:'numeric' });
+}
+function addDays(n){ var d = new Date(); d.setDate(d.getDate()+n); return d; }
+
+/* ---------- Render: categories & fabrics ---------- */
+function renderCats(){
+  var html = '';
+  CATEGORIES.forEach(function(c){
+    var n = c.id==='semua' ? ITEMS.length : ITEMS.filter(function(i){ return i.cat===c.id; }).length;
+    html += '<button type="button" class="cat-btn'+(state.cat===c.id?' active':'')+'" data-cat="'+c.id+'">'+c.label+'<span class="cnt">'+n+'</span></button>';
+  });
+  $('catList').innerHTML = html;
+  var btns = $('catList').querySelectorAll('.cat-btn');
+  for(var i=0;i<btns.length;i++){ btns[i].addEventListener('click', function(){ state.cat = this.getAttribute('data-cat'); renderCats(); renderGrid(); }); }
+}
+function renderFabrics(){
+  var html = '';
+  Object.keys(FABRICS).forEach(function(k){
+    var n = ITEMS.filter(function(i){ return i.fabric===k; }).length;
+    html += '<label class="check-row"><input type="checkbox" data-fabric="'+k+'"'+(state.fabrics[k]?' checked':'')+'> '+FABRICS[k].name+'<span class="cnt">'+n+'</span></label>';
+  });
+  $('fabricList').innerHTML = html;
+  var boxes = $('fabricList').querySelectorAll('input[type=checkbox]');
+  for(var i=0;i<boxes.length;i++){ boxes[i].addEventListener('change', function(){ state.fabrics[this.getAttribute('data-fabric')] = this.checked; renderGrid(); }); }
+}
+
+/* ---------- Render: catalog grid ---------- */
+function visibleItems(){
+  var activeFabrics = Object.keys(state.fabrics).filter(function(k){ return state.fabrics[k]; });
+  var list = ITEMS.filter(function(it){
+    if(state.cat!=='semua' && it.cat!==state.cat) return false;
+    if(activeFabrics.length && activeFabrics.indexOf(it.fabric)===-1) return false;
+    if(state.speed==='reguler' && it.days<7) return false;
+    if(state.speed==='ekspres' && !it.express) return false;
+    if(state.search){
+      var q = state.search.toLowerCase();
+      var hay = (it.name+' '+CAT_LABEL[it.cat]+' '+FABRICS[it.fabric].name+' '+it.desc).toLowerCase();
+      if(hay.indexOf(q)===-1) return false;
+    }
+    return true;
+  });
+  if(state.sort==='murah') list.sort(function(a,b){ return a.fee-b.fee; });
+  if(state.sort==='mahal') list.sort(function(a,b){ return b.fee-a.fee; });
+  if(state.sort==='cepat') list.sort(function(a,b){ return a.days-b.days; });
+  return list;
+}
+function renderGrid(){
+  var list = visibleItems();
+  var title = state.cat==='semua' ? 'Semua Model' : CAT_LABEL[state.cat];
+  $('catalogTitle').textContent = title;
+  $('catalogSub').textContent = 'Menampilkan ' + list.length + ' dari 12 model' + (state.search ? ' untuk pencarian “'+state.search+'”' : '') + '. Pilih model, atur ukuran badan di panel kanan, harga terhitung otomatis.';
+  if(!list.length){
+    $('catalogGrid').innerHTML = '<div class="empty"><h3>Tidak ada model yang cocok</h3><p>Coba longgarkan filter kain / kecepatan, atau ganti kata kunci pencarian.</p><button type="button" id="resetFilter">Reset Semua Filter</button></div>';
+    $('resetFilter').addEventListener('click', resetFilters);
+    return;
+  }
+  var html = '';
+  list.forEach(function(it){
+    html += '<article class="card'+(state.item.id===it.id?' selected':'')+'" data-id="'+it.id+'">'
+      + '<div class="card-art" style="background:'+it.bg+'">' + garmentSVG(it.type, it.color, it.fabric==='katun'?'batik':(it.fabric==='silk'?'sheen':(it.fabric==='linen'||it.fabric==='drill'?'weave':'plain')), 'c'+it.id)
+      + '<span class="card-tag">'+CAT_LABEL[it.cat].split(' ')[0]+'</span>'
+      + (it.express ? '<span class="card-xp">EKSPRES 3 HARI</span>' : '')
+      + '</div><div class="card-body"><h3>'+it.name+'</h3><p class="desc">'+it.desc+'</p>'
+      + '<div class="card-meta"><span class="chip">'+FABRICS[it.fabric].name+'</span><span class="chip">'+(it.meters>0 ? 'Butuh '+String(it.meters).replace('.',',')+'m kain' : 'Tanpa kain baru')+'</span><span class="chip">± '+it.days+' hari kerja</span></div>'
+      + '<div class="card-foot"><div class="price"><small>Ongkos Jahit Mulai</small><b>'+rp(it.fee)+'</b></div>'
+      + '<button type="button" class="pick-btn" data-pick="'+it.id+'">'+(state.item.id===it.id?'✓ Terpilih':'Pilih & Custom Ukuran')+'</button></div>'
+      + '</div></article>';
+  });
+  $('catalogGrid').innerHTML = html;
+  var btns = $('catalogGrid').querySelectorAll('[data-pick]');
+  for(var i=0;i<btns.length;i++){ btns[i].addEventListener('click', function(){ selectItem(parseInt(this.getAttribute('data-pick'),10)); }); }
+}
+function resetFilters(){
+  state.cat='semua'; state.fabrics={}; state.speed='semua'; state.search='';
+  $('searchInput').value='';
+  var radios = document.querySelectorAll('input[name=speed]');
+  for(var i=0;i<radios.length;i++){ radios[i].checked = radios[i].value==='semua'; }
+  renderCats(); renderFabrics(); renderGrid();
+  toast('Filter direset — menampilkan semua 12 model.');
+}
+
+/* ---------- Selection & workbench ---------- */
+function selectItem(id){
+  var it = null;
+  ITEMS.forEach(function(x){ if(x.id===id) it = x; });
+  if(!it) return;
+  state.item = it;
+  /* match swatch to item fabric when possible */
+  var sw = null;
+  SWATCHES.forEach(function(s){ if(s.fabric===it.fabric && !sw) sw = s; });
+  if(sw) state.swatch = sw;
+  /* gamis/abaya: default panjang baju lebih panjang */
+  if((it.cat==='gamis') && parseInt($('mPanjang').value,10) < 100){ $('mPanjang').value = 138; }
+  renderGrid(); renderBench();
+  if(window.innerWidth <= 960){ document.querySelector('.bench').scrollIntoView({ behavior:'smooth', block:'start' }); }
+  toast('Model dipilih: ' + it.name);
+}
+function renderSwatches(){
+  var html = '';
+  SWATCHES.forEach(function(s){
+    var bg = s.pattern==='batik'
+      ? 'background-color:'+s.color+';background-image:radial-gradient(circle at 30% 30%, rgba(253,230,138,.65) 2.5px, transparent 3px),radial-gradient(circle at 70% 70%, rgba(255,255,255,.4) 2.5px, transparent 3px);background-size:13px 13px;'
+      : s.pattern==='weave'
+      ? 'background-color:'+s.color+';background-image:repeating-linear-gradient(0deg, rgba(255,255,255,.16) 0 1px, transparent 1px 5px),repeating-linear-gradient(90deg, rgba(0,0,0,.14) 0 1px, transparent 1px 5px);'
+      : s.pattern==='sheen'
+      ? 'background:linear-gradient(135deg, '+s.color+' 0%, #F5E7CE 50%, '+s.color+' 100%);'
+      : 'background:'+s.color+';';
+    html += '<button type="button" class="swatch'+(state.swatch.id===s.id?' active':'')+'" data-swatch="'+s.id+'" aria-label="Bahan '+s.name+'"><span class="dotc" style="'+bg+'"></span><small>'+s.name+'</small></button>';
+  });
+  $('swatches').innerHTML = html;
+  var btns = $('swatches').querySelectorAll('[data-swatch]');
+  for(var i=0;i<btns.length;i++){ btns[i].addEventListener('click', function(){
+    var id = this.getAttribute('data-swatch');
+    SWATCHES.forEach(function(s){ if(s.id===id) state.swatch = s; });
+    renderBench();
+  }); }
+}
+function renderBench(){
+  var it = state.item, sw = state.swatch;
+  $('previewArt').style.background = it.bg;
+  $('previewArt').innerHTML = garmentSVG(it.type, sw.color, sw.pattern, 'pv');
+  $('pvName').textContent = it.name;
+  $('pvDesc').textContent = CAT_LABEL[it.cat] + ' · ± ' + it.days + ' hari kerja' + (it.express ? ' · bisa ekspres 3 hari' : '');
+  $('pvMeta').textContent = 'Ongkos mulai ' + rp(it.fee) + (it.meters>0 ? ' · butuh ' + String(it.meters).replace('.',',') + 'm kain' : ' · tanpa kain baru');
+  $('pvFabricName').textContent = sw.name + ' (' + FABRICS[sw.fabric].name + ' — ' + rp(FABRICS[sw.fabric].price) + '/m)';
+  renderSwatches();
+  calcPrice();
+}
+function measurements(){
+  return {
+    dada: parseFloat($('mDada').value) || 0,
+    bahu: parseFloat($('mBahu').value) || 0,
+    lengan: parseFloat($('mLengan').value) || 0,
+    pinggang: parseFloat($('mPinggang').value) || 0,
+    panjang: parseFloat($('mPanjang').value) || 0,
+    pinggul: parseFloat($('mPinggul').value) || 0
+  };
+}
+function guessSize(dada){
+  if(dada<=0) return null;
+  if(dada<=92) return 'S'; if(dada<=100) return 'M'; if(dada<=108) return 'L'; if(dada<=116) return 'XL'; return 'XXL';
+}
+function updateSizeHint(){
+  var m = measurements();
+  var g = guessSize(m.dada);
+  var hint = $('sizeHint');
+  if(!g){ hint.classList.remove('show'); return; }
+  hint.innerHTML = 'Berdasarkan lingkar dada <b>' + m.dada + ' cm</b>, ukuran terdekatmu adalah <b>' + g + '</b>. Penjahit menambahkan kelonggaran 4–6 cm saat memotong pola.';
+  hint.classList.add('show');
+  var presets = $('presetRow').querySelectorAll('.preset');
+  for(var i=0;i<presets.length;i++){ presets[i].classList.toggle('active', presets[i].getAttribute('data-size')===g); }
+}
+function calcPrice(){
+  var it = state.item, sw = state.swatch;
+  var fee = it.fee;
+  var expressFee = state.express ? Math.round(fee * 0.5) : 0;
+  var meters = it.meters;
+  var fabricCost = 0, fabricNote = 'Bawa kain sendiri';
+  if(!state.ownFabric && meters > 0){
+    fabricCost = Math.round(meters * FABRICS[sw.fabric].price);
+    fabricNote = String(meters).replace('.',',') + 'm × ' + rp(FABRICS[sw.fabric].price);
+  } else if(!state.ownFabric && meters === 0){
+    fabricNote = 'Model permak — tanpa bahan baru';
+  }
+  var perPcs = fee + expressFee + fabricCost;
+  var total = perPcs * state.qty;
+  var rows = '';
+  rows += '<div class="bill-row"><span>Ongkos jahit — ' + it.name + '</span><b>' + rp(fee) + '</b></div>';
+  rows += '<div class="bill-row"><span>Biaya bahan (' + fabricNote + ')</span><b>' + (fabricCost ? rp(fabricCost) : 'Rp 0') + '</b></div>';
+  if(state.express) rows += '<div class="bill-row"><span>Layanan ekspres 3 hari (+50%)</span><b>' + rp(expressFee) + '</b></div>';
+  if(state.qty > 1) rows += '<div class="bill-row"><span>Subtotal per pcs</span><b>' + rp(perPcs) + '</b></div>';
+  if(state.qty > 1) rows += '<div class="bill-row"><span>Jumlah</span><b>× ' + state.qty + ' pcs</b></div>';
+  rows += '<div class="bill-total"><span>Total Estimasi</span><b>' + rp(total) + '</b></div>';
+  $('bill').innerHTML = rows;
+  var days = state.express ? 3 : it.days;
+  $('etaLine').innerHTML = 'Estimasi selesai: <b>' + fmtDate(addDays(days)) + '</b> (' + (state.express ? 'ekspres 3 hari' : '± ' + days + ' hari kerja') + ') · DP 50%: <b>' + rp(total/2) + '</b>';
+  return { fee:fee, expressFee:expressFee, fabricCost:fabricCost, perPcs:perPcs, total:total, days:days, meters:meters };
+}
+
+/* ---------- Invoice / order summary ---------- */
+function orderData(){
+  var p = calcPrice();
+  var m = measurements();
+  return {
+    no: 'INV-2026-' + state.orderNo,
+    date: fmtDate(new Date()),
+    name: $('custName').value.trim(),
+    deadline: $('deadline').value ? fmtDate(new Date($('deadline').value + 'T12:00:00')) : '—',
+    notes: $('notes').value.trim() || '—',
+    item: state.item, swatch: state.swatch, m: m, price: p, qty: state.qty,
+    ownFabric: state.ownFabric, express: state.express,
+    size: guessSize(m.dada) || '—'
+  };
+}
+function orderText(o){
+  var lines = [];
+  lines.push('*PESANAN JAHIT — ATELIER NUSANTARA*');
+  lines.push('No. Invoice: ' + o.no + ' · ' + o.date);
+  lines.push('--------------------------------');
+  lines.push('Nama Pemesan: ' + (o.name || '(belum diisi)'));
+  lines.push('Model: ' + o.item.name);
+  lines.push('Kategori: ' + CAT_LABEL[o.item.cat]);
+  lines.push('Bahan: ' + o.swatch.name + ' (' + FABRICS[o.swatch.fabric].name + ')');
+  lines.push('Sumber Kain: ' + (o.ownFabric ? 'Bawa kain sendiri' : 'Kain dari penjahit (' + String(o.price.meters).replace('.',',') + 'm)'));
+  lines.push('Jumlah: ' + o.qty + ' pcs');
+  lines.push('--------------------------------');
+  lines.push('*UKURAN BADAN (cm)* — Ukuran terdekat: ' + o.size);
+  lines.push('Lingkar Dada: ' + o.m.dada + ' · Lebar Bahu: ' + o.m.bahu);
+  lines.push('Panjang Lengan: ' + o.m.lengan + ' · Lingkar Pinggang: ' + o.m.pinggang);
+  lines.push('Panjang Baju: ' + o.m.panjang + ' · Lingkar Pinggul: ' + o.m.pinggul);
+  lines.push('--------------------------------');
+  lines.push('Ongkos Jahit: ' + rp(o.price.fee));
+  lines.push('Biaya Bahan: ' + rp(o.price.fabricCost));
+  if(o.express) lines.push('Ekspres 3 Hari (+50%): ' + rp(o.price.expressFee));
+  lines.push('*TOTAL ESTIMASI: ' + rp(o.price.total) + '*');
+  lines.push('DP 50%: ' + rp(o.price.total/2));
+  lines.push('Target Selesai: ' + o.deadline);
+  lines.push('Catatan: ' + o.notes);
+  lines.push('--------------------------------');
+  lines.push('Terima kasih sudah mendukung penjahit UMKM lokal.');
+  return lines.join('\n');
+}
+function renderReceipt(o){
+  var m = o.m;
+  $('receiptBody').innerHTML =
+    '<div class="r-brand"><h3>ATELIER NUSANTARA</h3><p>Jahit Custom &amp; Seragam UMKM · Jl. Melati No. 12, Cimahi Tengah</p><p>' + o.no + ' · ' + o.date + '</p></div>'
+    + '<div class="r-row"><span>Nama Pemesan</span><b>' + esc(o.name || '—') + '</b></div>'
+    + '<div class="r-row"><span>Model</span><b>' + o.item.name + '</b></div>'
+    + '<div class="r-row"><span>Bahan</span><b>' + o.swatch.name + '</b></div>'
+    + '<div class="r-row"><span>Sumber Kain</span><b>' + (o.ownFabric ? 'Bawa sendiri' : 'Dari penjahit') + '</b></div>'
+    + '<div class="r-row"><span>Jumlah</span><b>' + o.qty + ' pcs</b></div>'
+    + '<div class="r-sep"></div>'
+    + '<div class="r-row"><span>Ukuran (cm) · setara ' + o.size + '</span><b class="mono" style="font-size:12px">Dada ' + m.dada + ' · Bahu ' + m.bahu + ' · Lengan ' + m.lengan + '<br>Pinggang ' + m.pinggang + ' · Pjg. Baju ' + m.panjang + ' · Pinggul ' + m.pinggul + '</b></div>'
+    + '<div class="r-sep"></div>'
+    + '<div class="r-row"><span>Ongkos jahit</span><b class="mono">' + rp(o.price.fee) + '</b></div>'
+    + '<div class="r-row"><span>Biaya bahan</span><b class="mono">' + rp(o.price.fabricCost) + '</b></div>'
+    + (o.express ? '<div class="r-row"><span>Ekspres 3 hari (+50%)</span><b class="mono">' + rp(o.price.expressFee) + '</b></div>' : '')
+    + (o.qty > 1 ? '<div class="r-row"><span>Subtotal × ' + o.qty + ' pcs</span><b class="mono">' + rp(o.price.perPcs) + ' /pcs</b></div>' : '')
+    + '<div class="r-total"><span style="font-weight:700">TOTAL ESTIMASI</span><b>' + rp(o.price.total) + '</b></div>'
+    + '<div class="r-row" style="margin-top:8px"><span>DP 50% untuk mulai jahit</span><b class="mono">' + rp(o.price.total/2) + '</b></div>'
+    + '<div class="r-row"><span>Target selesai</span><b>' + o.deadline + '</b></div>'
+    + '<div class="r-row"><span>Catatan</span><b style="max-width:55%">' + esc(o.notes) + '</b></div>'
+    + '<p style="text-align:center;color:var(--ink3);font-size:11.5px;margin:14px 0 0">Simpan struk ini. Tunjukkan nomor invoice saat pengambilan.<br>Terima kasih sudah mendukung penjahit UMKM lokal.</p>';
+}
+function openInvoice(){ renderReceipt(orderData()); $('invoiceOverlay').classList.add('show'); }
+function closeInvoice(){ $('invoiceOverlay').classList.remove('show'); }
+function waLink(){ return 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(orderText(orderData())); }
+function validateOrder(){
+  var err = $('formErr');
+  if(!$('custName').value.trim()){ err.textContent = 'Nama pemesan wajib diisi sebelum mengirim pesanan.'; err.classList.add('show'); $('custName').focus(); return false; }
+  if(!$('deadline').value){ err.textContent = 'Target tanggal selesai wajib dipilih.'; err.classList.add('show'); $('deadline').focus(); return false; }
+  var m = measurements();
+  if(m.dada < 60 || m.dada > 160){ err.textContent = 'Lingkar dada sepertinya tidak wajar (isi antara 60–160 cm).'; err.classList.add('show'); $('mDada').focus(); return false; }
+  err.classList.remove('show');
+  return true;
+}
+
+/* ---------- Kalkulator kain ---------- */
+function renderCalcModels(){
+  var html = '';
+  ITEMS.forEach(function(it){ html += '<option value="' + it.id + '">' + it.name + ' (basis ' + String(it.meters).replace('.',',') + ' m)</option>'; });
+  $('calcModel').innerHTML = html;
+}
+function runCalc(){
+  var h = parseFloat($('calcHeight').value) || 0;
+  var w = parseFloat($('calcWeight').value) || 0;
+  var res = $('calcResult');
+  if(h < 120 || h > 210 || w < 30 || w > 150){
+    res.innerHTML = '<p style="margin:0;color:#991B1B"><b>Periksa input:</b> tinggi badan wajar 120–210 cm dan berat badan 30–150 kg.</p>';
+    res.classList.add('show'); return;
+  }
+  var it = null;
+  ITEMS.forEach(function(x){ if(x.id === parseInt($('calcModel').value,10)) it = x; });
+  var fk = $('calcFabric').value;
+  var base = it.meters;
+  var extra = 0, notes = [];
+  if(h > 170){ extra += Math.round(((h - 170) / 10) * 0.2 * 10) / 10; notes.push('tinggi di atas 170 cm (panjang baju & lengan bertambah)'); }
+  if(w >= 85){ extra += 0.4; notes.push('postur berisi — pola diperlebar, butuh kain ekstra'); }
+  else if(w >= 70){ extra += 0.2; notes.push('postur sedang-besar — kelonggaran pola ditambah'); }
+  if(it.fabric === 'katun'){ extra += 0.2; notes.push('motif batik perlu penyelarasan motif'); }
+  var total = Math.round((base + extra) * 10) / 10;
+  var fabricCost = Math.round(total * FABRICS[fk].price);
+  var grand = fabricCost + it.fee;
+  var bmi = w / Math.pow(h/100, 2);
+  var sizeGuess = bmi < 18.5 ? 'S' : bmi < 23 ? 'M' : bmi < 27.5 ? 'L' : bmi < 32 ? 'XL' : 'XXL';
+  res.innerHTML = '<div class="big">' + String(total).replace('.',',') + ' meter</div>'
+    + '<p>Kebutuhan kain untuk <b>' + it.name + '</b> — basis model ' + String(base).replace('.',',') + ' m'
+    + (extra > 0 ? ' + penyesuaian ' + String(extra).replace('.',',') + ' m (' + notes.join('; ') + ')' : ' (tanpa penyesuaian)')
+    + '. Perkiraan ukuran baju: <b>' + sizeGuess + '</b>.</p>'
+    + '<p>Estimasi biaya kain ' + FABRICS[fk].name + ': <b>' + rp(fabricCost) + '</b> · Ongkos jahit: <b>' + rp(it.fee) + '</b> · <b>Total perkiraan: ' + rp(grand) + '</b> (bila kain dari penjahit).</p>';
+  res.classList.add('show');
+}
+
+/* ---------- Tabs ---------- */
+function switchTab(tab){
+  var tabs = document.querySelectorAll('.tab');
+  for(var i=0;i<tabs.length;i++){ tabs[i].classList.toggle('active', tabs[i].getAttribute('data-tab')===tab); }
+  $('viewKatalog').style.display = tab==='katalog' ? '' : 'none';
+  $('viewKalkulator').classList.toggle('show', tab==='kalkulator');
+  $('viewPanduan').classList.toggle('show', tab==='panduan');
+  $('centerScroll').scrollTop = 0;
+}
+
+/* ---------- Init & events ---------- */
+function init(){
+  renderCats(); renderFabrics(); renderGrid(); renderBench(); renderCalcModels(); updateSizeHint();
+
+  /* workshop ETA: 7 working-ish days ahead */
+  $('workshopEta').textContent = fmtDate(addDays(7));
+
+  /* deadline default: +7 days, min today */
+  var today = new Date(); var iso = function(d){ return d.toISOString().slice(0,10); };
+  $('deadline').min = iso(today);
+  var d7 = addDays(7); $('deadline').value = iso(d7);
+
+  var tabs = document.querySelectorAll('.tab');
+  for(var i=0;i<tabs.length;i++){ tabs[i].addEventListener('click', function(){ switchTab(this.getAttribute('data-tab')); }); }
+
+  $('searchInput').addEventListener('input', function(){ state.search = this.value.trim(); if(state.search) switchTab('katalog'); renderGrid(); });
+  $('sortSel').addEventListener('change', function(){ state.sort = this.value; renderGrid(); });
+
+  var radios = document.querySelectorAll('input[name=speed]');
+  for(var j=0;j<radios.length;j++){ radios[j].addEventListener('change', function(){ state.speed = this.value; renderGrid(); }); }
+
+  var presets = $('presetRow').querySelectorAll('.preset');
+  for(var k=0;k<presets.length;k++){ presets[k].addEventListener('click', function(){
+    var p = PRESETS[this.getAttribute('data-size')];
+    $('mDada').value = p.dada; $('mBahu').value = p.bahu; $('mLengan').value = p.lengan;
+    $('mPinggang').value = p.pinggang; $('mPinggul').value = p.pinggul;
+    $('mPanjang').value = state.item.cat==='gamis' ? 138 : p.panjang;
+    calcPrice(); updateSizeHint();
+    toast('Ukuran standar ' + this.getAttribute('data-size') + ' diterapkan.');
+  }); }
+
+  ['mDada','mBahu','mLengan','mPinggang','mPanjang','mPinggul'].forEach(function(id){
+    $(id).addEventListener('input', function(){ calcPrice(); updateSizeHint(); });
+  });
+
+  $('segOwn').addEventListener('click', function(){ state.ownFabric = true; this.classList.add('active'); $('segShop').classList.remove('active'); calcPrice(); });
+  $('segShop').addEventListener('click', function(){ state.ownFabric = false; this.classList.add('active'); $('segOwn').classList.remove('active'); calcPrice(); });
+  $('expressToggle').addEventListener('change', function(){ state.express = this.checked; calcPrice(); });
+
+  $('qtyMinus').addEventListener('click', function(){ if(state.qty > 1){ state.qty--; $('qtyOut').textContent = state.qty; calcPrice(); } });
+  $('qtyPlus').addEventListener('click', function(){ if(state.qty < 50){ state.qty++; $('qtyOut').textContent = state.qty; calcPrice(); } });
+
+  $('calcBtn').addEventListener('click', runCalc);
+
+  $('invoiceBtn').addEventListener('click', openInvoice);
+  $('invClose').addEventListener('click', closeInvoice);
+  $('invDone').addEventListener('click', closeInvoice);
+  $('invoiceOverlay').addEventListener('click', function(e){ if(e.target === this) closeInvoice(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeInvoice(); });
+
+  $('copyBtn').addEventListener('click', function(){
+    var text = orderText(orderData());
+    function done(){ toast('Ringkasan pesanan tersalin — siap ditempel ke catatan / WA.'); }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(done, function(){ fallbackCopy(text); done(); });
+    } else { fallbackCopy(text); done(); }
+  });
+  function fallbackCopy(text){
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); } catch(e){}
+    document.body.removeChild(ta);
+  }
+
+  function sendWA(fromModal){
+    if(!validateOrder()){ closeInvoice(); return; }
+    window.open(waLink(), '_blank');
+    state.queue++; state.orderNo++;
+    $('queueCount').textContent = state.queue;
+    if(!fromModal) openInvoice();
+    toast('Pesanan masuk antrean! Invoice ' + orderData().no + ' dibuat & WhatsApp dibuka.');
+  }
+  $('waBtn').addEventListener('click', function(){ sendWA(false); });
+  $('waBtn2').addEventListener('click', function(){ sendWA(true); });
+}
+document.addEventListener('DOMContentLoaded', init);
+})();
+</script>
+</body>
+</html>
