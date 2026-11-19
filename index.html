@@ -8,16 +8,21 @@
 <title>Katalog &amp; Sistem Jahit UMKM — Atelier Nusantara</title>
 <style>
   :root{
-    --canvas:#FAF8F5; --panel:#FFFFFF; --panel2:#F5F1EB; --ink:#1C1917; --ink2:#57534E; --ink3:#78716C;
-    --accent:#B45309; --accent-dark:#92400E; --accent-soft:#FEF3C7; --line:#E7E5E4; --line2:#D6D3D1;
-    --green:#15803D; --green-bg:#F0FDF4; --red:#B91C1C;
+    --canvas:#FAF6EE; --panel:#FFFDF8; --panel2:#F3ECDD; --ink:#211D18; --ink2:#5C554B; --ink3:#857A6B;
+    --accent:#A34D08; --accent-dark:#7E3A06; --accent-soft:#F7E8C8; --line:#E6DCC8; --line2:#D5C7AB;
+    --green:#2F6B33; --green-bg:#EFF4E4; --red:#A4261F;
     --serif:Georgia,'Times New Roman',Times,serif;
     --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
-    --mono:ui-monospace,'SF Mono',SFMono-Regular,Menlo,Consolas,monospace;
+    --mono:ui-monospace,'SF Mono',SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace;
+    --hand:'Bradley Hand','Segoe Script','Segoe Print','Comic Sans MS',cursive;
+    --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.06'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
   }
   *,*::before,*::after{box-sizing:border-box;}
   html,body{height:100%;}
   body{margin:0;padding:0;background:var(--canvas);color:var(--ink);font-family:var(--sans);font-size:14px;line-height:1.45;-webkit-font-smoothing:antialiased;}
+  /* grain halus di seluruh canvas — kertas/kain, bukan layar steril */
+  body::after{content:"";position:fixed;inset:0;z-index:300;pointer-events:none;background-image:var(--grain);mix-blend-mode:multiply;opacity:.8;}
+  .app{background-image:radial-gradient(1200px 500px at 70% -10%,rgba(233,181,43,.07),transparent 60%),radial-gradient(900px 600px at -10% 110%,rgba(163,77,8,.05),transparent 55%);}
   button,[role="button"],select,input:not([type="checkbox"],[type="radio"]){min-height:2.25rem;}
   button{font-family:var(--sans);cursor:pointer;}
   input,select,textarea{font-family:var(--sans);font-size:14px;color:var(--ink);}
@@ -50,7 +55,7 @@
   /* ============ LEFT RAIL ============ */
   .rail{background:var(--panel);border-right:1px solid var(--line);overflow-y:auto;min-height:0;display:flex;flex-direction:column;}
   .rail-sec{padding:16px 16px 6px;}
-  .rail h2{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);margin:0 0 10px;font-weight:700;}
+  .rail h2{font-size:12.5px;letter-spacing:.1em;font-variant:small-caps;color:var(--ink3);margin:0 0 10px;font-weight:700;}
   .cat-btn{display:flex;align-items:center;justify-content:space-between;width:100%;text-align:left;background:transparent;border:1px solid transparent;border-radius:8px;padding:9px 10px;font-size:13.5px;color:var(--ink);margin-bottom:2px;min-height:40px;}
   .cat-btn:hover{background:var(--panel2);}
   .cat-btn.active{background:var(--accent-soft);border-color:#FDE68A;color:var(--accent-dark);font-weight:700;}
@@ -63,7 +68,8 @@
   .radio-row{display:flex;align-items:center;gap:9px;padding:7px 10px;border-radius:8px;cursor:pointer;font-size:13.5px;min-height:36px;}
   .radio-row:hover{background:var(--panel2);}
   .radio-row input{width:17px;height:17px;accent-color:var(--accent);flex:none;margin:0;}
-  .workshop{margin:auto 12px 12px;background:var(--ink);color:#FAFAF9;border-radius:10px;padding:14px;}
+  .workshop{margin:auto 12px 12px;background:#2A2118;color:#FAF6EE;border-radius:10px;padding:14px;box-shadow:3px 4px 0 rgba(60,45,25,.12);position:relative;overflow:hidden;}
+  .workshop::after{content:"";position:absolute;inset:0;background-image:var(--grain);pointer-events:none;}
   .workshop h3{font-family:var(--serif);font-size:14px;margin:0 0 8px;color:#FDE68A;letter-spacing:.02em;}
   .workshop .slot{display:flex;align-items:baseline;gap:8px;margin-bottom:6px;}
   .workshop .slot b{font-family:var(--mono);font-size:26px;color:#fff;}
@@ -76,27 +82,67 @@
 
   /* ============ CENTER ============ */
   .center{overflow-y:auto;min-height:0;min-width:0;background:var(--canvas);}
-  .center-head{padding:20px 22px 4px;display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px;}
+  .center-head{padding:22px 22px 4px;display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px;}
   .center-head h2{font-family:var(--serif);font-size:24px;margin:0 0 4px;font-weight:700;}
   .center-head p{margin:0;color:var(--ink2);font-size:13px;max-width:560px;}
+  .display-tag{font-family:var(--serif);font-size:clamp(27px,3.2vw,39px);line-height:1.04;letter-spacing:-.022em;font-weight:700;margin:0 0 8px;color:var(--ink);max-width:640px;}
+  .display-tag em{font-style:italic;color:var(--accent-dark);}
+  .story-line{font-size:13px;color:var(--ink2);max-width:600px;line-height:1.6;margin:0 0 14px;}
+  .story-line b{color:var(--ink);}
+  .hand-note{font-family:var(--hand);color:var(--accent-dark);font-size:14.5px;line-height:1.3;display:inline-block;transform:rotate(-1.3deg);}
+  /* strip paling laris */
+  .laris-strip{margin:14px 22px 0;background:#2A2118;color:#F3E9D2;border-radius:10px;padding:11px 16px;display:flex;flex-wrap:wrap;align-items:center;gap:8px 22px;box-shadow:3px 4px 0 rgba(60,45,25,.10);}
+  .laris-strip .ls-title{font-variant:small-caps;letter-spacing:.08em;font-size:13px;font-weight:700;color:#EBCB7A;white-space:nowrap;}
+  .laris-strip .ls-item{font-size:12.5px;color:#E9DFC9;}
+  .laris-strip .ls-item b{font-family:var(--mono);font-weight:700;color:#fff;}
+  /* kartu featured */
+  .featured{margin:14px 22px 0;background:var(--panel);border:1px solid var(--line2);border-radius:12px;display:grid;grid-template-columns:minmax(220px,300px) 1fr;overflow:hidden;box-shadow:5px 7px 0 rgba(60,45,25,.06),0 18px 30px -22px rgba(60,45,25,.45);}
+  .featured-art{min-height:230px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;border-right:1px solid var(--line);}
+  .featured-art svg{height:210px;width:auto;position:relative;z-index:1;}
+  .featured-art::after,.card-art::after{content:"";position:absolute;inset:0;background-image:var(--grain),repeating-linear-gradient(0deg,rgba(70,48,20,.035) 0 1px,transparent 1px 4px),repeating-linear-gradient(90deg,rgba(70,48,20,.03) 0 1px,transparent 1px 4px);}
+  .featured-body{padding:18px 20px;display:flex;flex-direction:column;gap:8px;}
+  .featured-body .f-kicker{font-variant:small-caps;letter-spacing:.09em;font-size:12.5px;font-weight:700;color:var(--accent-dark);}
+  .featured-body h3{font-family:var(--serif);font-size:23px;margin:0;line-height:1.2;}
+  .featured-body p{margin:0;font-size:13.5px;color:var(--ink2);line-height:1.6;max-width:520px;}
+  .featured-foot{margin-top:auto;display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap;border-top:1px dashed var(--line2);padding-top:12px;}
+  .featured-foot .price b{font-size:19px;}
+  .stamp{position:absolute;bottom:12px;right:12px;z-index:2;border:2px solid rgba(164,38,31,.6);color:rgba(164,38,31,.78);font-size:9.5px;font-weight:800;letter-spacing:.16em;padding:4px 8px 3px;border-radius:3px;transform:rotate(-6deg);text-transform:uppercase;background:rgba(255,253,248,.4);box-shadow:inset 0 0 0 1px rgba(164,38,31,.18);}
+  /* testimoni */
+  .testi-wrap{padding:2px 22px 30px;}
+  .testi-wrap>h3{font-family:var(--serif);font-size:19px;margin:6px 0 4px;}
+  .testi-wrap>.t-sub{font-size:12.5px;color:var(--ink2);margin:0 0 12px;}
+  .testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+  .testi{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 15px;box-shadow:2px 3px 0 rgba(60,45,25,.05);}
+  .testi:nth-child(2){transform:rotate(.35deg);}
+  .testi:nth-child(3){transform:rotate(-.3deg);}
+  .testi p{margin:0 0 9px;font-size:13px;line-height:1.6;color:var(--ink);}
+  .testi .who{font-size:12px;color:var(--ink2);}
+  .testi .who b{color:var(--ink);}
+  .testi .who .mono{font-family:var(--mono);font-size:11px;color:var(--accent-dark);}
   .sort-wrap{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink2);}
   .sort-wrap select{border:1px solid var(--line2);border-radius:8px;background:#fff;padding:0 10px;height:38px;}
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(232px,1fr));gap:14px;padding:16px 22px 26px;}
-  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;transition:border-color .15s, box-shadow .15s;}
-  .card:hover{border-color:var(--line2);box-shadow:0 6px 18px rgba(28,25,23,.07);}
-  .card.selected{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent),0 6px 18px rgba(180,83,9,.12);}
-  .card-art{height:158px;display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--line);position:relative;overflow:hidden;}
-  .card-art svg{height:138px;width:auto;}
-  .card-tag{position:absolute;top:10px;left:10px;background:rgba(255,255,255,.92);border:1px solid var(--line);border-radius:99px;font-size:10.5px;font-weight:700;letter-spacing:.04em;padding:3px 9px;color:var(--accent-dark);text-transform:uppercase;}
-  .card-xp{position:absolute;top:10px;right:10px;background:var(--ink);color:#FDE68A;border-radius:99px;font-size:10.5px;font-weight:700;padding:3px 9px;}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:10px 13px 11px 12px;overflow:hidden;display:flex;flex-direction:column;transition:border-color .15s, box-shadow .15s;box-shadow:2px 3px 0 rgba(60,45,25,.045),0 12px 20px -16px rgba(60,45,25,.35);}
+  .card:nth-child(3n+2){box-shadow:-2px 4px 0 rgba(60,45,25,.04),0 14px 22px -15px rgba(60,45,25,.32);}
+  .card:nth-child(4n+3){box-shadow:3px 2px 0 rgba(60,45,25,.05),0 10px 24px -13px rgba(60,45,25,.38);}
+  .card:hover{border-color:var(--line2);box-shadow:3px 5px 0 rgba(60,45,25,.06),0 16px 26px -14px rgba(60,45,25,.4);}
+  .card.selected{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent),3px 5px 0 rgba(163,77,8,.12);}
+  .card-art{height:164px;display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--line);position:relative;overflow:hidden;}
+  .card-art svg{height:146px;width:auto;position:relative;z-index:1;filter:drop-shadow(3px 5px 4px rgba(43,30,12,.22));}
+  .card:nth-child(odd) .card-art svg{transform:rotate(-.6deg);}
+  .card:nth-child(3n) .card-art svg{transform:rotate(.7deg);}
+  .card-tag{position:absolute;top:10px;left:10px;z-index:2;background:rgba(255,253,248,.94);border:1px solid var(--line2);border-radius:3px;font-size:10px;font-weight:700;letter-spacing:.07em;padding:3px 8px;color:var(--accent-dark);text-transform:uppercase;transform:rotate(-1deg);}
+  .card-xp{position:absolute;top:10px;right:10px;z-index:2;background:var(--ink);color:#EBCB7A;border-radius:3px;font-size:10px;font-weight:700;letter-spacing:.05em;padding:3px 8px;transform:rotate(1deg);}
   .card-body{padding:13px 14px 14px;display:flex;flex-direction:column;gap:7px;flex:1;}
   .card-body h3{font-family:var(--serif);font-size:16px;margin:0;line-height:1.3;}
   .card-body .desc{font-size:12.5px;color:var(--ink2);margin:0;line-height:1.5;}
   .card-meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px;}
-  .chip{font-size:11px;background:var(--panel2);border:1px solid var(--line);border-radius:6px;padding:3px 8px;color:var(--ink2);font-family:var(--mono);}
-  .card-foot{margin-top:auto;padding-top:8px;border-top:1px dashed var(--line);display:flex;align-items:flex-end;justify-content:space-between;gap:8px;}
-  .price small{display:block;font-size:10px;color:var(--ink3);letter-spacing:.05em;text-transform:uppercase;}
-  .price b{font-family:var(--mono);font-size:15px;color:var(--accent-dark);}
+  .chip{font-size:11px;background:var(--panel2);border:1px solid var(--line);border-radius:4px;padding:3px 8px;color:var(--ink2);font-family:var(--mono);}
+  .chip.sewn{background:#2A2118;border-color:#2A2118;color:#EBCB7A;font-weight:700;}
+  .card .hand-note{margin-top:1px;}
+  .card-foot{margin-top:auto;padding-top:8px;border-top:1px dashed var(--line2);display:flex;align-items:flex-end;justify-content:space-between;gap:8px;}
+  .price small{display:block;font-size:11.5px;color:var(--ink3);letter-spacing:.07em;font-variant:small-caps;font-weight:700;}
+  .price b{font-family:var(--mono);font-size:16.5px;font-weight:700;letter-spacing:-.02em;color:var(--accent-dark);}
   .pick-btn{background:var(--ink);color:#fff;border:0;border-radius:8px;padding:0 13px;font-size:12.5px;font-weight:700;min-height:38px;white-space:nowrap;}
   .pick-btn:hover{background:var(--accent-dark);}
   .card.selected .pick-btn{background:var(--accent);}
@@ -111,7 +157,7 @@
   .calc-card h2,.guide-card h2{font-family:var(--serif);font-size:22px;margin:0 0 6px;}
   .calc-card>p,.guide-card>p{color:var(--ink2);margin:0 0 16px;font-size:13.5px;}
   .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-  .field label{display:block;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink2);margin-bottom:5px;}
+  .field label{display:block;font-size:12.5px;font-weight:700;letter-spacing:.07em;font-variant:small-caps;color:var(--ink2);margin-bottom:5px;}
   .field input,.field select{width:100%;border:1px solid var(--line2);border-radius:8px;padding:0 11px;height:40px;background:#fff;box-sizing:border-box;}
   .field input:focus,.field select:focus{border-color:var(--accent);outline:none;}
   .calc-result{margin-top:16px;background:var(--green-bg);border:1px solid #BBF7D0;border-radius:10px;padding:15px 16px;display:none;}
@@ -131,11 +177,12 @@
   /* ============ RIGHT WORKBENCH ============ */
   .bench{background:var(--panel);border-left:1px solid var(--line2);overflow-y:auto;min-height:0;}
   .bench-sec{padding:16px 18px;border-bottom:1px solid var(--line);}
-  .bench-sec h2{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);margin:0 0 12px;font-weight:700;display:flex;justify-content:space-between;align-items:center;}
+  .bench-sec h2{font-size:12.5px;letter-spacing:.1em;font-variant:small-caps;color:var(--ink3);margin:0 0 12px;font-weight:700;display:flex;justify-content:space-between;align-items:center;}
   .bench-sec h2 .live{color:var(--green);letter-spacing:0;text-transform:none;font-size:11px;font-weight:600;}
   .preview{display:flex;gap:14px;align-items:center;}
-  .preview-art{width:118px;height:138px;flex:none;border:1px solid var(--line);border-radius:10px;display:flex;align-items:center;justify-content:center;overflow:hidden;transition:background .25s;}
-  .preview-art svg{height:124px;width:auto;}
+  .preview-art{width:118px;height:138px;flex:none;border:1px solid var(--line2);border-radius:9px;display:flex;align-items:center;justify-content:center;overflow:hidden;transition:background .25s;position:relative;box-shadow:2px 3px 0 rgba(60,45,25,.07);}
+  .preview-art::after{content:"";position:absolute;inset:0;background-image:var(--grain);}
+  .preview-art svg{height:124px;width:auto;position:relative;z-index:1;filter:drop-shadow(2px 4px 3px rgba(43,30,12,.22));}
   .preview-info{min-width:0;}
   .preview-info h3{font-family:var(--serif);font-size:17px;margin:0 0 3px;line-height:1.3;}
   .preview-info p{margin:0 0 6px;font-size:12px;color:var(--ink2);line-height:1.5;}
@@ -235,6 +282,12 @@
     .rail{order:3;border-right:0;border-top:1px solid var(--line);overflow:visible;}
     .grid{grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));padding:14px;}
     .center-head,.view-pane{padding-left:14px;padding-right:14px;}
+    .laris-strip,.featured{margin-left:14px;margin-right:14px;}
+    .featured{grid-template-columns:1fr;}
+    .featured-art{border-right:0;border-bottom:1px solid var(--line);min-height:200px;}
+    .testi-wrap{padding-left:14px;padding-right:14px;}
+    .testi-grid{grid-template-columns:1fr;}
+    .testi:nth-child(2),.testi:nth-child(3){transform:none;}
     .form-grid,.guide-cols{grid-template-columns:1fr;}
     .card-foot{flex-direction:column;align-items:stretch;}
     .pick-btn{width:100%;white-space:normal;}
@@ -254,7 +307,7 @@
       </div>
       <div>
         <h1>ATELIER NUSANTARA</h1>
-        <p>Jahit Custom &amp; Seragam UMKM</p>
+        <p>Workshop Bu Sari · Ciputat · sejak 2012</p>
       </div>
     </div>
     <nav class="tabs" aria-label="Navigasi utama">
@@ -268,10 +321,10 @@
         <input id="searchInput" type="search" placeholder="Cari model… mis. batik, gamis, jas, permak" aria-label="Cari model jahitan">
       </div>
     </div>
-    <div class="queue" title="Pesanan yang sedang dikerjakan workshop">
+    <div class="queue" title="Pesanan yang sedang dikerjakan workshop — terakhir masuk: Mba Rina, kebaya wisuda">
       <span class="dot" aria-hidden="true"></span>
       <b id="queueCount">3</b>
-      <span>Antrean<br>Aktif</span>
+      <span>Antrean Aktif<br><span style="color:var(--ink3)">terakhir: Mba Rina</span></span>
     </div>
   </header>
 
@@ -293,21 +346,48 @@
         <label class="radio-row"><input type="radio" name="speed" value="ekspres"> Ekspres · 3 Hari <span class="cnt" style="margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--ink3)">bisa kilat</span></label>
       </div>
       <div class="workshop">
-        <h3>Status Workshop</h3>
+        <h3>Workshop Hari Ini</h3>
         <div class="slot"><b>4</b><span>Slot Jahit Tersisa<br>Minggu Ini</span></div>
         <div class="slotbar" aria-hidden="true"><i></i></div>
+        <p>Antrean: <b>3 pesanan</b> — terakhir masuk: Mba Rina, kebaya wisuda.</p>
         <p>Estimasi selesai pesanan baru: <b id="workshopEta">Rabu, 26 Nov 2026</b></p>
-        <p class="addr">Jl. Melati No. 12, Kel. Sukamaju, Kec. Cimahi Tengah — Buka Senin–Sabtu 08.00–17.00 WIB</p>
+        <p class="addr">Jl. Raya Ciputat No. 47, seberang Pasar Ciputat — patokan warung kopi Pak Haji, pagar hijau.<br>Buka Senin–Jumat 08.00–17.00 · Sabtu sampai 15.00 · Minggu tutup, mesin istirahat.</p>
+        <p class="addr" style="margin-top:6px">Penjahit utama: Bu Sari (sejak 2012). Khusus jas dibantu Pak Budi.</p>
       </div>
     </aside>
 
     <!-- ================= CENTER ================= -->
     <section class="center" id="centerScroll">
       <div id="viewKatalog">
+        <div style="padding:24px 22px 0">
+          <p class="display-tag">Dijahit satu-satu, <em>bukan massal.</em></p>
+          <p class="story-line">Workshop kami mulai tahun 2012 dari <b>satu mesin jahit di teras rumah</b>. Sekarang ada 4 mesin dan 2 meja potong, tapi caranya tetap sama: <b>Bu Sari</b> yang mengukur, memotong pola, dan memeriksa jahitan terakhir sebelum bajumu dibungkus. Khusus jas, bahu dan kerahnya dikerjakan <b>Pak Budi</b> — beliau memang cuma mau pegang jas.</p>
+        </div>
+        <div class="laris-strip" role="note" aria-label="Paling laris minggu ini">
+          <span class="ls-title">Paling Laris Minggu Ini</span>
+          <span class="ls-item">Kemeja Batik Mega Mendung — <b>212× dijahit sejak 2023</b></span>
+          <span class="ls-item">Gamis Linen Harian — <b>148×</b></span>
+          <span class="ls-item">Permak Kilat — <b>96× bulan ini</b></span>
+        </div>
+        <div class="featured" aria-label="Model terlaris">
+          <div class="featured-art" style="background:#F3E3D3" id="featuredArt">
+            <span class="stamp">Jahitan Tangan</span>
+          </div>
+          <div class="featured-body">
+            <span class="f-kicker">Yang paling sering dipesan ulang</span>
+            <h3>Kemeja Batik Mega Mendung</h3>
+            <p>Sudah <b>212 kali dijahit sejak 2023</b> — kebanyakan untuk seragam kantor dan acara keluarga. Batik tulisnya kami selaraskan manual di bagian kancing, makanya butuh kain sedikit lebih banyak dari kemeja biasa. Furingnya katun tipis, tidak gerah dipakai seharian.</p>
+            <span class="hand-note">motif disejajarkan manual ✎ — Bu Sari</span>
+            <div class="featured-foot">
+              <div class="price"><small>Ongkos Jahit Mulai</small><b>Rp 127.500</b></div>
+              <button type="button" class="pick-btn" id="featuredPick" style="min-height:42px;padding:0 18px">Pilih &amp; Custom Ukuran</button>
+            </div>
+          </div>
+        </div>
         <div class="center-head">
           <div>
             <h2 id="catalogTitle">Semua Model</h2>
-            <p id="catalogSub">12 model jahitan custom dari penjahit UMKM lokal — pilih model, atur ukuran badan di panel kanan, harga terhitung otomatis.</p>
+            <p id="catalogSub">12 model yang biasa kami jahit di workshop — pilih modelnya, atur ukuran badanmu di panel kanan, ongkosnya langsung kelihatan.</p>
           </div>
           <div class="sort-wrap">
             <label for="sortSel">Urutkan</label>
@@ -320,29 +400,48 @@
           </div>
         </div>
         <div class="grid" id="catalogGrid"></div>
+        <div class="testi-wrap">
+          <h3>Kata yang sudah pernah jahit di sini</h3>
+          <p class="t-sub">Ditulis apa adanya dari buku catatan pesanan &amp; chat pelanggan (nama disamarkan seizin mereka).</p>
+          <div class="testi-grid">
+            <div class="testi">
+              <p>“Kebaya wisuda anak saya selesai 2 hari lebih cepat. Di bagian pinggang dikasih kelonggaran sedikit kata Bu Sari, ‘biar bisa duduk lama pas acara’ — beneran kepakai.”</p>
+              <div class="who"><b>Bu Hartini</b> · Ciputat · <span class="mono">Kebaya Kartini Brokat</span></div>
+            </div>
+            <div class="testi">
+              <p>“Jas saya fitting dua kali, bahu kanan saya memang lebih turun. Pak Budi yang betulin polanya, hasilnya jatuh pas, nggak narik pas salaman.”</p>
+              <div class="who"><b>Pak Dedi S.</b> · Pamulang · <span class="mono">Jas Formal Full Furing</span></div>
+            </div>
+            <div class="testi">
+              <p>“Udah 3x permak celana di sini. Cepet, jahitannya rapi, dan dikasih tahu dulu kalau kainnya sudah tipis — nggak asal terima.”</p>
+              <div class="who"><b>Mba Rina</b> · Tangerang Selatan · <span class="mono">Permak &amp; Vermak Kilat</span></div>
+            </div>
+          </div>
+          <p class="hand-note" style="margin-top:14px">terima kasih sudah percaya sama workshop kecil kami ✎</p>
+        </div>
       </div>
 
       <div class="view-pane" id="viewKalkulator">
         <div class="calc-card">
           <h2>Kalkulator Kebutuhan Kain</h2>
-          <p>Masukkan tinggi &amp; berat badan serta model yang diinginkan. Kalkulator memperkirakan kebutuhan kain (lebar kain standar 115 cm) dan estimasi total biaya bila kain dibeli dari penjahit.</p>
+          <p>Isi tinggi &amp; berat badanmu dan model yang mau dijahit. Ini hitungan kasar ala Bu Sari sebelum ukur beneran — lebar kain standar 115 cm. Angka finalnya tetap dikonfirmasi pas pengukuran, karena potongan motif dan model bisa menggeser kebutuhan kain.</p>
           <div class="form-grid">
             <div class="field"><label for="calcHeight">Tinggi Badan (cm)</label><input id="calcHeight" type="number" min="120" max="210" value="165" inputmode="numeric"></div>
             <div class="field"><label for="calcWeight">Berat Badan (kg)</label><input id="calcWeight" type="number" min="30" max="150" value="60" inputmode="numeric"></div>
             <div class="field"><label for="calcModel">Model Jahitan</label><select id="calcModel"></select></div>
             <div class="field"><label for="calcFabric">Jenis Kain</label>
               <select id="calcFabric">
-                <option value="katun">Katun Primisima — Rp 65.000/m</option>
-                <option value="toyobo">Toyobo — Rp 55.000/m</option>
-                <option value="linen">Linen Rami — Rp 85.000/m</option>
-                <option value="drill">Wool Drill — Rp 95.000/m</option>
-                <option value="silk">Silk Satin — Rp 120.000/m</option>
+                <option value="katun">Katun Primisima — Rp 67.500/m</option>
+                <option value="toyobo">Toyobo — Rp 56.500/m</option>
+                <option value="linen">Linen Rami — Rp 87.500/m</option>
+                <option value="drill">Wool Drill — Rp 96.500/m</option>
+                <option value="silk">Silk Satin — Rp 118.000/m</option>
               </select>
             </div>
           </div>
           <button class="wa-btn" id="calcBtn" type="button" style="background:var(--accent);margin-top:14px">Hitung Kebutuhan Kain</button>
           <div class="calc-result" id="calcResult" role="status"></div>
-          <p style="font-size:12px;color:var(--ink3);margin:14px 0 0">Catatan: hasil adalah estimasi awal untuk lebar kain 115 cm. Kain bermotif (batik) biasanya butuh tambahan 0,2–0,3 m untuk menyelaraskan motif. Penjahit akan mengonfirmasi ukuran final saat pengukuran.</p>
+          <p style="font-size:12px;color:var(--ink3);margin:14px 0 0">Catatan jujur: ini estimasi awal untuk lebar kain 115 cm. Batik tulis biasanya butuh tambahan 0,2–0,3 m karena motifnya kami selaraskan manual — kalau motifnya besar, bisa lebih. Bu Sari konfirmasi angka pastinya sebelum kain dipotong.</p>
         </div>
       </div>
 
@@ -486,11 +585,11 @@ var WA_NUMBER = '6281234567890';
 var rp = function(n){ return 'Rp ' + Math.round(n).toLocaleString('id-ID'); };
 
 var FABRICS = {
-  katun:  { name:'Katun Primisima', price:65000 },
-  linen:  { name:'Linen Rami',      price:85000 },
-  silk:   { name:'Silk Satin',      price:120000 },
-  drill:  { name:'Wool Drill',      price:95000 },
-  toyobo: { name:'Toyobo',          price:55000 }
+  katun:  { name:'Katun Primisima', price:67500 },
+  linen:  { name:'Linen Rami',      price:87500 },
+  silk:   { name:'Silk Satin',      price:118000 },
+  drill:  { name:'Wool Drill',      price:96500 },
+  toyobo: { name:'Toyobo',          price:56500 }
 };
 
 var CATEGORIES = [
@@ -505,22 +604,22 @@ var CAT_LABEL = {}; CATEGORIES.forEach(function(c){ CAT_LABEL[c.id]=c.label; });
 
 /* type: shirt|kebaya|dress|uniform|blouse|gamis|abaya|suit|blazer|permak */
 var ITEMS = [
-  { id:1,  name:'Kemeja Batik Mega Mendung', cat:'batik',  fabric:'katun',  fee:125000, days:7,  meters:2.5, express:true,  type:'shirt',   color:'#7F1D1D', bg:'#FEF2F2', desc:'Batik tulis motif mega mendung, furing katun adem, kancing sembunyi. Favorit untuk acara kantor & kondangan.' },
-  { id:2,  name:'Kebaya Kartini Brokat Modern', cat:'batik', fabric:'silk', fee:185000, days:10, meters:2.0, express:false, type:'kebaya',  color:'#9D174D', bg:'#FDF2F8', desc:'Kebaya kutubaru brokat premium dengan payet halus di leher, potongan kartini yang anggun.' },
-  { id:3,  name:'Dress Batik A-Line Kondangan', cat:'batik', fabric:'katun', fee:135000, days:7, meters:2.8, express:true,  type:'dress',   color:'#92400E', bg:'#FFFBEB', desc:'Dress batik potongan A-line dengan tali pinggang, resleting belakang, saku samping tersembunyi.' },
-  { id:4,  name:'Kemeja Polos Slim Fit Kantor', cat:'kemeja', fabric:'toyobo', fee:85000, days:7, meters:2.0, express:true,  type:'shirt',   color:'#1E3A5F', bg:'#EFF6FF', desc:'Kemeja kerja slim fit anti kusut, kerah tegak rapi, cocok untuk seragam harian kantor.' },
-  { id:5,  name:'Seragam PDH / PDL + Bordir Nama', cat:'kemeja', fabric:'drill', fee:110000, days:10, meters:2.2, express:false, type:'uniform', color:'#3F6212', bg:'#F7FEE7', desc:'Seragam dinas bahan drill tebal, termasuk bordir nama & logo dada. Harga grosir untuk ≥ 10 pcs.' },
-  { id:6,  name:'Blus Kantor Linen Santai', cat:'kemeja', fabric:'linen', fee:95000, days:7, meters:1.8, express:true,  type:'blouse',  color:'#A3B18A', bg:'#F7F8F0', desc:'Blus linen rami adem dengan kancing batok kelapa, lengan 3/4, nyaman untuk iklim tropis.' },
-  { id:7,  name:'Gamis Syar’i Polos Premium', cat:'gamis', fabric:'silk', fee:165000, days:10, meters:3.5, express:false, type:'gamis',   color:'#5B21B6', bg:'#F5F3FF', desc:'Gamis syar’i jatuh elegan, busui friendly, wudhu friendly, potongan longgar tidak menerawang.' },
-  { id:8,  name:'Gamis Linen Casual Harian', cat:'gamis', fabric:'linen', fee:145000, days:7, meters:3.0, express:true,  type:'gamis',   color:'#588157', bg:'#F0FDF4', desc:'Gamis linen adem untuk harian & pengajian, saku kanan-kiri, tali serut pinggang adjustable.' },
-  { id:9,  name:'Abaya Toyobo Hitam Elegan', cat:'gamis', fabric:'toyobo', fee:150000, days:10, meters:3.2, express:false, type:'abaya',   color:'#292524', bg:'#F5F5F4', desc:'Abaya toyobo hitam pekat tidak mudah kusut, detail bordir minimalis di ujung lengan.' },
-  { id:10, name:'Jas Formal Full Furing', cat:'jas', fabric:'drill', fee:350000, days:10, meters:3.0, express:false, type:'suit',    color:'#1C1917', bg:'#F5F5F4', desc:'Jas formal full furing & padding bahu terstruktur, fitting 2x, untuk wisuda, lamaran & pernikahan.' },
-  { id:11, name:'Blazer Casual Wanita', cat:'jas', fabric:'linen', fee:225000, days:7, meters:2.2, express:true,  type:'blazer',  color:'#B45309', bg:'#FFFBEB', desc:'Blazer casual separuh furing, potongan relaxed, saku paspoal, serbaguna untuk kerja & acara.' },
-  { id:12, name:'Permak & Vermak Kilat', cat:'permak', fabric:'toyobo', fee:35000, days:3, meters:0, express:true,  type:'permak',  color:'#0F766E', bg:'#F0FDF9', desc:'Kecilkan celana, potong gamis, ganti resleting, tambal sobek. Tanpa kain baru — bawa pakaianmu saja.' }
+  { id:1,  name:'Kemeja Batik Mega Mendung', cat:'batik',  fabric:'katun',  fee:127500, days:7,  meters:2.5, express:true,  type:'shirt',   pat:'megamendung', color:'#7C2D2D', bg:'#F3E0D2', sewn:'212× dijahit sejak 2023', note:'motif disejajarkan manual ✎', stamp:true, desc:'Batik tulis motif mega mendung dari Cirebon. Motifnya kami selaraskan manual di jalur kancing, makanya butuh kain lebih — hasilnya awan di dada nyambung, tidak putus. Furing katun tipis, kancing sembunyi.' },
+  { id:2,  name:'Kebaya Kartini Brokat', cat:'batik', fabric:'silk', fee:187000, days:10, meters:2.0, express:false, type:'kebaya',  pat:'sheen', color:'#8E2A4E', bg:'#F0DCD8', sewn:'87× dijahit', note:'payet dijahit tangan satu-satu ✎', stamp:true, desc:'Kutubaru brokat dengan bef kartini. Payet di leher dijahit tangan satu-satu, bukan dilem — lebih awet dicuci. Di pinggang kami beri kelonggaran sedikit, biar nyaman duduk lama pas acara.' },
+  { id:3,  name:'Dress Batik A-Line Kondangan', cat:'batik', fabric:'katun', fee:136500, days:7, meters:2.8, express:true,  type:'dress',   pat:'megamendung', color:'#8A4A12', bg:'#F2E4C8', sewn:'64× dijahit', desc:'Potongan A-line, melebar dari pinggang ke bawah jadi tidak sesak pas duduk. Resleting belakang panjang, ada saku samping — kata pelanggan kami itu yang paling kepakai buat simpan HP.' },
+  { id:4,  name:'Kemeja Polos Slim Fit Kantor', cat:'kemeja', fabric:'toyobo', fee:86500, days:7, meters:2.0, express:true,  type:'shirt',   pat:'plain', color:'#27435F', bg:'#DEE2DA', sewn:'176× dijahit', desc:'Toyobo adem, tidak gampang kusut. Kerahnya kami lapisi kain keras tipis supaya tetap tegak setelah dicuci berkali-kali. Slim fit-nya tidak ketat — masih bisa buat wudhu dan naik motor.' },
+  { id:5,  name:'Seragam PDH / PDL + Bordir Nama', cat:'kemeja', fabric:'drill', fee:112000, days:10, meters:2.2, express:false, type:'uniform', pat:'weave', color:'#4A5A23', bg:'#E4E3CC', sewn:'340+ pcs untuk 6 instansi', desc:'Drill tebal, jahitan rantai di bahu biar kuat. Bordir nama & logo dikerjakan di tempat bordir langganan kami di Pasar Ciputat. Pesan 10 pcs ke atas ongkosnya turun — tanya dulu lewat WA.' },
+  { id:6,  name:'Blus Kantor Linen Santai', cat:'kemeja', fabric:'linen', fee:96500, days:7, meters:1.8, express:true,  type:'blouse',  pat:'weave', color:'#77875A', bg:'#E7E7D2', sewn:'58× dijahit', desc:'Linen rami asli, makin sering dicuci makin lembut. Kancingnya batok kelapa, lengan 3/4. Jujur saja: linen gampang kusut, itu memang sifat kainnya — tapi ademnya tidak bohong.' },
+  { id:7,  name:'Gamis Syar’i Polos', cat:'gamis', fabric:'silk', fee:167500, days:10, meters:3.5, express:false, type:'gamis',   pat:'sheen', color:'#5E4A6B', bg:'#E6DCE4', sewn:'93× dijahit', desc:'Potongan longgar, bahan jatuh dan tidak menerawang — kami tes dulu di cahaya sebelum dipotong. Resleting depan untuk busui, manset kancing untuk wudhu. Panjang standar 138 cm, bisa disesuaikan.' },
+  { id:8,  name:'Gamis Linen Harian', cat:'gamis', fabric:'linen', fee:146000, days:7, meters:3.0, express:true,  type:'gamis',   pat:'weave', color:'#5B7350', bg:'#E2E7D0', sewn:'148× dijahit', note:'saku kanan-kiri, selalu kepakai ✎', desc:'Gamis linen buat harian dan pengajian. Saku kanan-kiri dalam, tali serut di pinggang jadi bisa dilonggarkan habis makan. Ini model kedua paling sering dipesan ulang di workshop kami.' },
+  { id:9,  name:'Abaya Toyobo Hitam', cat:'gamis', fabric:'toyobo', fee:152500, days:10, meters:3.2, express:false, type:'abaya',   pat:'plain', color:'#2B2724', bg:'#E8E2D6', sewn:'71× dijahit', desc:'Toyobo hitam pekat, tidak gampang kusut dan tidak nerawang. Bordir kecil saja di ujung lengan — kebanyakan pelanggan kami memang mintanya yang polos dan tenang begini.' },
+  { id:10, name:'Jas Formal Full Furing', cat:'jas', fabric:'drill', fee:347500, days:10, meters:3.0, express:false, type:'suit',    pat:'pinstripe', color:'#26221E', bg:'#E3DED2', sewn:'119× dijahit', note:'fitting 2×, bahu dikerjakan Pak Budi ✎', desc:'Full furing, bahu terstruktur. Wajib fitting 2 kali karena bahu tiap orang beda — kanan-kiri saja sering selisih. Bagian bahu dan kerah dikerjakan Pak Budi sendiri. Untuk wisuda, lamaran, dan nikahan.' },
+  { id:11, name:'Blazer Casual Wanita', cat:'jas', fabric:'linen', fee:227000, days:7, meters:2.2, express:true,  type:'blazer',  pat:'weave', color:'#9A5A1E', bg:'#F0E2C4', sewn:'52× dijahit', desc:'Separuh furing jadi tidak gerah, potongan santai tidak kaku. Saku paspoal beneran (bisa dipakai, bukan pajangan). Sering dipesan untuk presentasi dan foto kantor.' },
+  { id:12, name:'Permak & Vermak Kilat', cat:'permak', fabric:'toyobo', fee:36500, days:3, meters:0, express:true,  type:'permak',  pat:'plain', color:'#33655B', bg:'#DCE5D8', sewn:'96× bulan ini', desc:'Kecilkan celana, potong gamis, ganti resleting, tambal yang sobek. Bawa saja pakaiannya — kami cek dulu kondisinya; kalau kainnya sudah terlalu tipis kami bilang terus terang, tidak asal terima.' }
 ];
 
 var SWATCHES = [
-  { id:'maroon',   name:'Maroon Batik',   fabric:'katun', color:'#7F1D1D', pattern:'batik' },
+  { id:'maroon',   name:'Maroon Batik',   fabric:'katun', color:'#7C2D2D', pattern:'megamendung' },
   { id:'navy',     name:'Navy Drill',     fabric:'drill', color:'#1E3A5F', pattern:'plain' },
   { id:'sage',     name:'Sage Linen',     fabric:'linen', color:'#A3B18A', pattern:'weave' },
   { id:'cream',    name:'Cream Silk',     fabric:'silk',  color:'#D9B98A', pattern:'sheen' },
@@ -543,32 +642,98 @@ var state = {
 
 /* ---------- SVG garment illustrations ---------- */
 function patDef(id, color, pattern){
-  if(pattern==='batik') return '<pattern id="'+id+'" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="16" height="16" fill="'+color+'"/><circle cx="4" cy="4" r="2.2" fill="rgba(255,255,255,.35)"/><circle cx="12" cy="12" r="2.2" fill="rgba(253,230,138,.5)"/></pattern>';
-  if(pattern==='weave') return '<pattern id="'+id+'" width="7" height="7" patternUnits="userSpaceOnUse"><rect width="7" height="7" fill="'+color+'"/><path d="M0 3.5H7M3.5 0V7" stroke="rgba(255,255,255,.22)" stroke-width="1"/></pattern>';
-  if(pattern==='sheen') return '<linearGradient id="'+id+'" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="'+color+'"/><stop offset=".5" stop-color="#F5E7CE"/><stop offset="1" stop-color="'+color+'"/></linearGradient>';
+  if(pattern==='megamendung') return '<pattern id="'+id+'" width="30" height="20" patternUnits="userSpaceOnUse"><rect width="30" height="20" fill="'+color+'"/><path d="M-6 8 Q3 0 12 8 T30 8 T48 8" fill="none" stroke="rgba(255,244,220,.55)" stroke-width="2.6"/><path d="M-6 10 Q3 3 12 10 T30 10 T48 10" fill="none" stroke="rgba(0,0,0,.20)" stroke-width="1.6"/><path d="M-6 19 Q3 11 12 19 T30 19 T48 19" fill="none" stroke="rgba(255,244,220,.38)" stroke-width="2.2"/><path d="M-6 21 Q3 14 12 21 T30 21 T48 21" fill="none" stroke="rgba(0,0,0,.16)" stroke-width="1.3"/></pattern>';
+  if(pattern==='batik') return '<pattern id="'+id+'" width="30" height="20" patternUnits="userSpaceOnUse"><rect width="30" height="20" fill="'+color+'"/><path d="M-6 8 Q3 0 12 8 T30 8 T48 8" fill="none" stroke="rgba(255,244,220,.5)" stroke-width="2.4"/><path d="M-6 19 Q3 11 12 19 T30 19 T48 19" fill="none" stroke="rgba(253,230,138,.4)" stroke-width="2"/></pattern>';
+  if(pattern==='pinstripe') return '<pattern id="'+id+'" width="7" height="7" patternUnits="userSpaceOnUse"><rect width="7" height="7" fill="'+color+'"/><path d="M1.5 0V7" stroke="rgba(245,238,220,.4)" stroke-width="1.1"/><path d="M5.5 0V7" stroke="rgba(0,0,0,.18)" stroke-width=".7"/></pattern>';
+  if(pattern==='weave') return '<pattern id="'+id+'" width="7" height="7" patternUnits="userSpaceOnUse"><rect width="7" height="7" fill="'+color+'"/><path d="M0 3.5H7M3.5 0V7" stroke="rgba(255,255,255,.20)" stroke-width="1"/><path d="M0 1.2H7M0 5.8H7" stroke="rgba(0,0,0,.10)" stroke-width=".7"/></pattern>';
+  if(pattern==='sheen') return '<linearGradient id="'+id+'" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="'+color+'"/><stop offset=".42" stop-color="#EBD9BC"/><stop offset=".62" stop-color="'+color+'"/><stop offset="1" stop-color="'+color+'"/></linearGradient>';
   return '';
 }
 function garmentSVG(type, color, pattern, uid){
   var fill = pattern==='plain' ? color : 'url(#p'+uid+')';
   var head = '<svg viewBox="0 0 120 150" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true"><defs>'+patDef('p'+uid,color,pattern)+'</defs>';
-  var dark = 'rgba(0,0,0,.28)', line = 'stroke="'+dark+'" stroke-width="1.6" fill="none" stroke-linecap="round"';
+  var dark = 'rgba(0,0,0,.30)';
+  var line = 'stroke="'+dark+'" stroke-width="1.6" fill="none" stroke-linecap="round"';
+  var st  = 'stroke="rgba(255,248,230,.65)" stroke-width="1.1" fill="none" stroke-dasharray="3.2 2.6" stroke-linecap="round"'; /* garis jahitan terang */
+  var std = 'stroke="rgba(0,0,0,.38)" stroke-width="1.1" fill="none" stroke-dasharray="3.2 2.6" stroke-linecap="round"'; /* garis jahitan gelap */
+  var fold = 'stroke="rgba(0,0,0,.13)" stroke-width="3.4" fill="none" stroke-linecap="round"';
+  var hilite = 'stroke="rgba(255,255,255,.30)" stroke-width="2.2" fill="none" stroke-linecap="round"';
+  function btn(cx, cy, r, c){ return '<circle cx="'+(cx+0.9)+'" cy="'+(cy+1.1)+'" r="'+r+'" fill="rgba(0,0,0,.30)"/><circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="'+c+'"/><circle cx="'+(cx-0.7)+'" cy="'+(cy-0.7)+'" r="'+(r*0.38)+'" fill="rgba(255,255,255,.55)"/>'; }
   var body = '';
   if(type==='kebaya'){
-    body = '<path d="M42 18 L60 30 L78 18 L86 30 L80 52 L84 128 L36 128 L40 52 L34 30 Z" fill="'+fill+'" '+line+'/><path d="M60 30 L52 128 M60 30 L68 128" '+line+'/><circle cx="60" cy="48" r="2.4" fill="#FDE68A"/><circle cx="58" cy="66" r="2.4" fill="#FDE68A"/><circle cx="57" cy="84" r="2.4" fill="#FDE68A"/><path d="M36 112 H84" '+line+'/>';
+    body = '<path d="M42 16 L60 30 L78 16 L87 29 L80 52 L84 128 L36 128 L40 52 L33 29 Z" fill="'+fill+'" '+line+'/>'
+      + '<path d="M47 55 Q48 92 46 122 M73 55 Q72 92 74 122" '+fold+'/>'
+      + '<path d="M60 30 L51 128 M60 30 L69 128" '+line+'/>'
+      + '<path d="M57.5 33 L50 124 M62.5 33 L70 124" '+st+'/>'
+      + '<circle cx="60" cy="46" r="3" fill="rgba(0,0,0,.25)"/><circle cx="60" cy="45" r="3" fill="#E9B52B"/><circle cx="60" cy="45" r="1.2" fill="#FFF3C4"/>'
+      + btn(58.2,63,2.3,'#E9B52B') + btn(57.2,81,2.3,'#E9B52B') + btn(56.4,99,2.3,'#E9B52B')
+      + '<path d="M36 110 H84 M36 118 H84" stroke="rgba(233,181,43,.55)" stroke-width="2" fill="none"/>'
+      + '<path d="M38 124 H82" '+st+'/>';
   } else if(type==='dress'){
-    body = '<path d="M44 16 L60 26 L76 16 L84 28 L74 50 L90 130 L30 130 L46 50 L36 28 Z" fill="'+fill+'" '+line+'/><path d="M46 62 H74" '+line+'/><path d="M38 104 H82" stroke="rgba(255,255,255,.4)" stroke-width="2" fill="none"/>';
+    body = '<path d="M44 15 L60 25 L76 15 L85 27 L74 50 L91 130 L29 130 L46 50 L35 27 Z" fill="'+fill+'" '+line+'/>'
+      + '<path d="M52 26 Q60 33 68 26" '+line+'/>'
+      + '<path d="M50 62 Q48 96 44 126 M60 64 V128 M70 62 Q72 96 76 126" '+fold+'/>'
+      + '<path d="M47 58 H73 M47 63 H73" '+std+'/>'
+      + '<path d="M55 50 L65 50 L63 58 L57 58 Z" fill="#E9B52B" stroke="'+dark+'"/>'
+      + '<path d="M33 124 H87" '+st+'/>';
   } else if(type==='gamis' || type==='abaya'){
-    body = '<path d="M45 14 L60 24 L75 14 L88 26 L82 56 L88 136 L32 136 L38 56 L32 26 Z" fill="'+fill+'" '+line+'/><path d="M60 24 V136" '+line+'/><path d="M40 84 H80" '+line+'/><circle cx="60" cy="40" r="2.2" fill="rgba(255,255,255,.7)"/><circle cx="60" cy="54" r="2.2" fill="rgba(255,255,255,.7)"/>';
+    body = '<path d="M45 13 L60 23 L75 13 L88 25 L82 56 L89 136 L31 136 L38 56 L32 25 Z" fill="'+fill+'" '+line+'/>'
+      + '<path d="M50 26 Q60 31 70 26" '+line+'/>'
+      + '<path d="M44 60 Q42 98 41 130 M76 60 Q78 98 79 130" '+fold+'/>'
+      + '<path d="M60 23 V132" '+line+'/><path d="M63.5 30 V128" '+std+'/>'
+      + btn(60,40,2.1,'rgba(255,255,255,.85)') + btn(60,54,2.1,'rgba(255,255,255,.85)') + btn(60,68,2.1,'rgba(255,255,255,.85)')
+      + '<path d="M39 88 H52 M68 88 H81" '+std+'/>'
+      + '<path d="M37 50 L43 50 M77 50 L83 50" '+line+'/>'
+      + '<path d="M34 131 H86" '+st+'/>';
   } else if(type==='suit' || type==='blazer'){
-    body = '<path d="M40 16 L60 28 L80 16 L90 28 L84 60 L86 132 L34 132 L36 60 L30 28 Z" fill="'+fill+'" '+line+'/><path d="M48 18 L60 62 L72 18 L60 28 Z" fill="rgba(255,255,255,.9)" stroke="'+dark+'"/><path d="M48 18 L60 62 M72 18 L60 62" '+line+'/><path d="M38 92 H54 M66 92 H82" '+line+'/><circle cx="60" cy="76" r="2.4" fill="#FDE68A"/>';
+    body = '<path d="M40 15 L60 27 L80 15 L90 27 L84 60 L86 132 L34 132 L36 60 L30 27 Z" fill="'+fill+'" '+line+'/>'
+      + '<path d="M49 17 L60 60 L56 66 L46 34 Z" fill="rgba(0,0,0,.20)" stroke="'+dark+'"/>'
+      + '<path d="M71 17 L60 60 L64 66 L74 34 Z" fill="rgba(0,0,0,.20)" stroke="'+dark+'"/>'
+      + '<path d="M52 22 L60 56 L68 22 L60 28 Z" fill="#F5EFE2" stroke="'+dark+'"/>'
+      + '<path d="M60 30 L57 44 L60 62 L63 44 Z" fill="#7C2D2D"/>'
+      + '<path d="M47 32 L58 58 M73 32 L62 58" '+st+'/>'
+      + btn(60,78,2.5,'#E9B52B') + btn(60,94,2.5,'#E9B52B')
+      + '<path d="M38 96 H53 M67 96 H82" '+line+'/><path d="M38 100 H53 M67 100 H82" '+std+'/>'
+      + '<path d="M69 40 L77 36 L76 44 L69 46 Z" fill="rgba(255,255,255,.75)" stroke="'+dark+'"/>'
+      + '<circle cx="40" cy="122" r="1.4" fill="rgba(255,255,255,.5)"/><circle cx="44" cy="122" r="1.4" fill="rgba(255,255,255,.5)"/><circle cx="76" cy="122" r="1.4" fill="rgba(255,255,255,.5)"/><circle cx="80" cy="122" r="1.4" fill="rgba(255,255,255,.5)"/>'
+      + '<path d="M37 127 H83" '+std+'/>';
   } else if(type==='uniform'){
-    body = '<path d="M42 16 L60 26 L78 16 L88 28 L82 56 L84 130 L36 130 L38 56 L32 28 Z" fill="'+fill+'" '+line+'/><path d="M60 26 V130" '+line+'/><path d="M42 46 H54 V58 H42 Z M66 46 H78 V58 H66 Z" fill="rgba(255,255,255,.25)" stroke="'+dark+'"/><path d="M40 74 H80" '+line+'/><rect x="50" y="34" width="20" height="6" rx="2" fill="#FDE68A"/>';
+    body = '<path d="M42 15 L60 25 L78 15 L88 27 L82 56 L84 130 L36 130 L38 56 L32 27 Z" fill="'+fill+'" '+line+'/>'
+      + '<path d="M50 15 L60 27 L70 15 L60 21 Z" fill="rgba(255,255,255,.30)" stroke="'+dark+'"/>'
+      + '<path d="M36 30 L46 27 M84 30 L74 27" stroke="'+dark+'" stroke-width="3" fill="none"/>'
+      + '<path d="M60 27 V126" '+line+'/><path d="M56.8 32 V122 M63.2 32 V122" '+st+'/>'
+      + btn(60,44,2.1,'rgba(255,255,255,.9)') + btn(60,60,2.1,'rgba(255,255,255,.9)') + btn(60,76,2.1,'rgba(255,255,255,.9)') + btn(60,92,2.1,'rgba(255,255,255,.9)')
+      + '<path d="M42 48 H55 V60 H42 Z M65 48 H78 V60 H65 Z" fill="rgba(255,255,255,.20)" stroke="'+dark+'"/>'
+      + '<path d="M42 48 H55 M65 48 H78" '+std+'/>'
+      + '<rect x="49" y="33" width="22" height="6.5" rx="1.5" fill="#E9B52B" stroke="rgba(0,0,0,.3)"/>'
+      + '<path d="M39 125 H81" '+st+'/>';
   } else if(type==='blouse'){
-    body = '<path d="M44 16 L60 28 L76 16 L86 30 L78 58 L80 118 L40 118 L42 58 L34 30 Z" fill="'+fill+'" '+line+'/><path d="M60 28 V118" '+line+'/><circle cx="60" cy="46" r="2.2" fill="rgba(0,0,0,.4)"/><circle cx="60" cy="62" r="2.2" fill="rgba(0,0,0,.4)"/><circle cx="60" cy="78" r="2.2" fill="rgba(0,0,0,.4)"/><circle cx="60" cy="94" r="2.2" fill="rgba(0,0,0,.4)"/>';
+    body = '<path d="M44 15 L60 27 L76 15 L86 29 L78 56 L80 118 L40 118 L42 56 L34 29 Z" fill="'+fill+'" '+line+'/>'
+      + '<path d="M51 15 L60 26 L69 15 L64 13 L60 19 L56 13 Z" fill="rgba(255,255,255,.35)" stroke="'+dark+'"/>'
+      + '<path d="M48 58 Q47 86 47 112 M72 58 Q73 86 73 112" '+fold+'/>'
+      + '<path d="M60 27 V114" '+line+'/><path d="M63.2 32 V110" '+std+'/>'
+      + btn(60,45,2.2,'#6B4A2A') + btn(60,61,2.2,'#6B4A2A') + btn(60,77,2.2,'#6B4A2A') + btn(60,93,2.2,'#6B4A2A')
+      + '<path d="M41 50 H47 M73 50 H79" '+line+'/><path d="M43 113 H77" '+st+'/>';
   } else if(type==='permak'){
-    body = '<path d="M38 20 H82 L78 66 L74 132 H58 L60 78 L62 132 H46 L42 66 Z" fill="'+fill+'" '+line+'/><path d="M38 34 H82 M46 52 H54 M66 52 H74" '+line+'/><circle cx="98" cy="34" r="5" fill="none" stroke="'+color+'" stroke-width="2.4"/><circle cx="98" cy="62" r="5" fill="none" stroke="'+color+'" stroke-width="2.4"/><path d="M94 39 L84 58" stroke="'+color+'" stroke-width="2.4" stroke-linecap="round"/>';
+    body = '<path d="M38 18 H82 L78 64 L74 132 H58 L60 76 L62 132 H46 L42 64 Z" fill="'+fill+'" '+line+'/>'
+      + '<path d="M50 70 L52 126 M70 70 L68 126" '+fold+'/>'
+      + '<path d="M38 32 H82" '+line+'/><path d="M38 37 H82" '+std+'/>'
+      + '<path d="M59 76 L61 76" '+line+'/>'
+      + '<path d="M47 46 H55 M65 46 H73" fill="rgba(255,255,255,.25)" stroke="'+dark+'"/>'
+      + '<path d="M44 96 H56 M64 96 H76" stroke="#A4261F" stroke-width="1.4" stroke-dasharray="4 3" fill="none"/>'
+      + '<circle cx="99" cy="30" r="5.5" fill="none" stroke="'+color+'" stroke-width="2.4"/><circle cx="99" cy="60" r="5.5" fill="none" stroke="'+color+'" stroke-width="2.4"/><path d="M95.5 35.5 L85 54" stroke="'+color+'" stroke-width="2.4" stroke-linecap="round"/>'
+      + '<path d="M14 108 Q30 118 46 110" stroke="#E9B52B" stroke-width="4" fill="none"/><path d="M18 106 L19 111 M26 109 L27 114 M34 110 L35 115" stroke="rgba(0,0,0,.45)" stroke-width="1.2"/>';
   } else { /* shirt */
-    body = '<path d="M42 16 L60 26 L78 16 L88 28 L82 56 L84 130 L36 130 L38 56 L32 28 Z" fill="'+fill+'" '+line+'/><path d="M50 16 L60 28 L70 16 L60 22 Z" fill="rgba(255,255,255,.35)" stroke="'+dark+'"/><path d="M60 28 V130" '+line+'/><circle cx="60" cy="44" r="2.1" fill="rgba(255,255,255,.85)"/><circle cx="60" cy="60" r="2.1" fill="rgba(255,255,255,.85)"/><circle cx="60" cy="76" r="2.1" fill="rgba(255,255,255,.85)"/><circle cx="60" cy="92" r="2.1" fill="rgba(255,255,255,.85)"/><path d="M66 48 H78 V60 H66 Z" fill="rgba(255,255,255,.22)" stroke="'+dark+'"/>';
+    body = '<path d="M42 15 L60 25 L78 15 L88 27 L82 56 L84 130 L36 130 L38 56 L32 27 Z" fill="'+fill+'" '+line+'/>'
+      + '<path d="M49 14 L60 27 L71 14 L65 12 L60 19 L55 12 Z" fill="rgba(255,255,255,.38)" stroke="'+dark+'"/>'
+      + '<path d="M49 14 L60 24 M71 14 L60 24" '+std+'/>'
+      + '<path d="M45 58 Q44 92 44 124 M75 58 Q76 92 76 124" '+fold+'/>'
+      + '<path d="M52 34 Q50 78 51 118" '+hilite+'/>'
+      + '<path d="M60 27 V126" '+line+'/><path d="M56.8 32 V122 M63.2 32 V122" '+st+'/>'
+      + btn(60,43,2.15,'rgba(255,255,255,.92)') + btn(60,59,2.15,'rgba(255,255,255,.92)') + btn(60,75,2.15,'rgba(255,255,255,.92)') + btn(60,91,2.15,'rgba(255,255,255,.92)') + btn(60,107,2.15,'rgba(255,255,255,.92)')
+      + '<path d="M67 46 H79 V59 H67 Z" fill="rgba(255,255,255,.20)" stroke="'+dark+'"/><path d="M67 46 H79" '+st+'/>'
+      + '<path d="M39 50 L45 50 M75 50 L81 50" '+line+'/>'
+      + '<path d="M39 125 H81" '+st+'/>';
   }
   return head + body + '</svg>';
 }
@@ -631,7 +796,7 @@ function renderGrid(){
   var list = visibleItems();
   var title = state.cat==='semua' ? 'Semua Model' : CAT_LABEL[state.cat];
   $('catalogTitle').textContent = title;
-  $('catalogSub').textContent = 'Menampilkan ' + list.length + ' dari 12 model' + (state.search ? ' untuk pencarian “'+state.search+'”' : '') + '. Pilih model, atur ukuran badan di panel kanan, harga terhitung otomatis.';
+  $('catalogSub').textContent = 'Ada ' + list.length + ' dari 12 model' + (state.search ? ' untuk pencarian “'+state.search+'”' : '') + ' yang biasa kami jahit. Pilih modelnya, atur ukuran badanmu di panel kanan — ongkosnya langsung kelihatan, tidak pakai tanya-tanya dulu.';
   if(!list.length){
     $('catalogGrid').innerHTML = '<div class="empty"><h3>Tidak ada model yang cocok</h3><p>Coba longgarkan filter kain / kecepatan, atau ganti kata kunci pencarian.</p><button type="button" id="resetFilter">Reset Semua Filter</button></div>';
     $('resetFilter').addEventListener('click', resetFilters);
@@ -640,11 +805,13 @@ function renderGrid(){
   var html = '';
   list.forEach(function(it){
     html += '<article class="card'+(state.item.id===it.id?' selected':'')+'" data-id="'+it.id+'">'
-      + '<div class="card-art" style="background:'+it.bg+'">' + garmentSVG(it.type, it.color, it.fabric==='katun'?'batik':(it.fabric==='silk'?'sheen':(it.fabric==='linen'||it.fabric==='drill'?'weave':'plain')), 'c'+it.id)
+      + '<div class="card-art" style="background:'+it.bg+'">' + garmentSVG(it.type, it.color, it.pat || 'plain', 'c'+it.id)
       + '<span class="card-tag">'+CAT_LABEL[it.cat].split(' ')[0]+'</span>'
       + (it.express ? '<span class="card-xp">EKSPRES 3 HARI</span>' : '')
+      + (it.stamp ? '<span class="stamp">Jahitan Tangan</span>' : '')
       + '</div><div class="card-body"><h3>'+it.name+'</h3><p class="desc">'+it.desc+'</p>'
-      + '<div class="card-meta"><span class="chip">'+FABRICS[it.fabric].name+'</span><span class="chip">'+(it.meters>0 ? 'Butuh '+String(it.meters).replace('.',',')+'m kain' : 'Tanpa kain baru')+'</span><span class="chip">± '+it.days+' hari kerja</span></div>'
+      + (it.note ? '<span class="hand-note">'+it.note+'</span>' : '')
+      + '<div class="card-meta"><span class="chip sewn">'+it.sewn+'</span><span class="chip">'+FABRICS[it.fabric].name+'</span><span class="chip">'+(it.meters>0 ? 'Butuh '+String(it.meters).replace('.',',')+'m kain' : 'Tanpa kain baru')+'</span><span class="chip">± '+it.days+' hari kerja</span></div>'
       + '<div class="card-foot"><div class="price"><small>Ongkos Jahit Mulai</small><b>'+rp(it.fee)+'</b></div>'
       + '<button type="button" class="pick-btn" data-pick="'+it.id+'">'+(state.item.id===it.id?'✓ Terpilih':'Pilih & Custom Ukuran')+'</button></div>'
       + '</div></article>';
@@ -681,7 +848,7 @@ function selectItem(id){
 function renderSwatches(){
   var html = '';
   SWATCHES.forEach(function(s){
-    var bg = s.pattern==='batik'
+    var bg = (s.pattern==='batik' || s.pattern==='megamendung')
       ? 'background-color:'+s.color+';background-image:radial-gradient(circle at 30% 30%, rgba(253,230,138,.65) 2.5px, transparent 3px),radial-gradient(circle at 70% 70%, rgba(255,255,255,.4) 2.5px, transparent 3px);background-size:13px 13px;'
       : s.pattern==='weave'
       ? 'background-color:'+s.color+';background-image:repeating-linear-gradient(0deg, rgba(255,255,255,.16) 0 1px, transparent 1px 5px),repeating-linear-gradient(90deg, rgba(0,0,0,.14) 0 1px, transparent 1px 5px);'
@@ -800,13 +967,13 @@ function orderText(o){
   lines.push('Target Selesai: ' + o.deadline);
   lines.push('Catatan: ' + o.notes);
   lines.push('--------------------------------');
-  lines.push('Terima kasih sudah mendukung penjahit UMKM lokal.');
+  lines.push('Terima kasih sudah jahit di workshop kami — Bu Sari & Pak Budi.');
   return lines.join('\n');
 }
 function renderReceipt(o){
   var m = o.m;
   $('receiptBody').innerHTML =
-    '<div class="r-brand"><h3>ATELIER NUSANTARA</h3><p>Jahit Custom &amp; Seragam UMKM · Jl. Melati No. 12, Cimahi Tengah</p><p>' + o.no + ' · ' + o.date + '</p></div>'
+    '<div class="r-brand"><h3>ATELIER NUSANTARA</h3><p>Workshop Bu Sari · Jl. Raya Ciputat No. 47, seberang Pasar Ciputat</p><p>' + o.no + ' · ' + o.date + '</p></div>'
     + '<div class="r-row"><span>Nama Pemesan</span><b>' + esc(o.name || '—') + '</b></div>'
     + '<div class="r-row"><span>Model</span><b>' + o.item.name + '</b></div>'
     + '<div class="r-row"><span>Bahan</span><b>' + o.swatch.name + '</b></div>'
@@ -823,7 +990,7 @@ function renderReceipt(o){
     + '<div class="r-row" style="margin-top:8px"><span>DP 50% untuk mulai jahit</span><b class="mono">' + rp(o.price.total/2) + '</b></div>'
     + '<div class="r-row"><span>Target selesai</span><b>' + o.deadline + '</b></div>'
     + '<div class="r-row"><span>Catatan</span><b style="max-width:55%">' + esc(o.notes) + '</b></div>'
-    + '<p style="text-align:center;color:var(--ink3);font-size:11.5px;margin:14px 0 0">Simpan struk ini. Tunjukkan nomor invoice saat pengambilan.<br>Terima kasih sudah mendukung penjahit UMKM lokal.</p>';
+    + '<p style="text-align:center;color:var(--ink3);font-size:11.5px;margin:14px 0 0">Simpan struk ini. Tunjukkan nomor invoice saat pengambilan.<br>Terima kasih sudah jahit di workshop kami — Bu Sari &amp; Pak Budi.</p>';
 }
 function openInvoice(){ renderReceipt(orderData()); $('invoiceOverlay').classList.add('show'); }
 function closeInvoice(){ $('invoiceOverlay').classList.remove('show'); }
@@ -887,6 +1054,12 @@ function switchTab(tab){
 /* ---------- Init & events ---------- */
 function init(){
   renderCats(); renderFabrics(); renderGrid(); renderBench(); renderCalcModels(); updateSizeHint();
+
+  /* kartu featured: ilustrasi model terlaris (id 1) + tombol pilih */
+  var fArt = $('featuredArt');
+  if(fArt){ fArt.innerHTML = garmentSVG(ITEMS[0].type, ITEMS[0].color, ITEMS[0].pat || 'plain', 'feat') + '<span class="stamp">Jahitan Tangan</span>'; }
+  var fPick = $('featuredPick');
+  if(fPick){ fPick.addEventListener('click', function(){ selectItem(1); switchTab('katalog'); }); }
 
   /* workshop ETA: 7 working-ish days ahead */
   $('workshopEta').textContent = fmtDate(addDays(7));
