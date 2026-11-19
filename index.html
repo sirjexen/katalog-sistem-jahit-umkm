@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light">
 <link rel="icon" href="data:,">
-<title>Katalog &amp; Sistem Jahit UMKM — Atelier Nusantara</title>
+<title>Katalog &amp; Sistem Jahit UMKM — Koes Busana</title>
 <style>
   :root{
     --canvas:#FAF8F5; --panel:#FFFFFF; --panel2:#F4F0E9; --ink:#211D18; --ink2:#5C554B; --ink3:#8A8175;
@@ -253,7 +253,7 @@
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.6"/><circle cx="6" cy="18" r="2.6"/><path d="M8.2 7.8 20 19M8.2 16.2 20 5"/></svg>
       </div>
       <div>
-        <h1>ATELIER NUSANTARA</h1>
+        <h1>KOES BUSANA</h1>
         <p>Workshop Bu Sari · Ciputat · sejak 2012</p>
       </div>
     </div>
@@ -349,7 +349,7 @@
       <div class="view-pane" id="viewPanduan">
         <div class="guide-card">
           <h2>Panduan Ukuran Standar</h2>
-          <p>Tabel ukuran standar Atelier Nusantara (dalam cm). Klik preset S–XXL di panel kanan untuk mengisi ukuran ini otomatis, lalu sesuaikan bila perlu.</p>
+          <p>Tabel ukuran standar Koes Busana (dalam cm). Klik preset S–XXL di panel kanan untuk mengisi ukuran ini otomatis, lalu sesuaikan bila perlu.</p>
           <table class="size">
             <thead><tr><th>Ukuran</th><th>Lingkar Dada</th><th>Lebar Bahu</th><th>Pjg. Lengan</th><th>Lkr. Pinggang</th><th>Pjg. Baju</th></tr></thead>
             <tbody>
@@ -841,7 +841,7 @@ function orderData(){
 }
 function orderText(o){
   var lines = [];
-  lines.push('*PESANAN JAHIT — ATELIER NUSANTARA*');
+  lines.push('*PESANAN JAHIT — KOES BUSANA*');
   lines.push('No. Invoice: ' + o.no + ' · ' + o.date);
   lines.push('--------------------------------');
   lines.push('Nama Pemesan: ' + (o.name || '(belum diisi)'));
@@ -870,7 +870,7 @@ function orderText(o){
 function renderReceipt(o){
   var m = o.m;
   $('receiptBody').innerHTML =
-    '<div class="r-brand"><h3>ATELIER NUSANTARA</h3><p>Workshop Bu Sari · Jl. Raya Ciputat No. 47, seberang Pasar Ciputat</p><p>' + o.no + ' · ' + o.date + '</p></div>'
+    '<div class="r-brand"><h3>KOES BUSANA</h3><p>Workshop Bu Sari · Jl. Raya Ciputat No. 47, seberang Pasar Ciputat</p><p>' + o.no + ' · ' + o.date + '</p></div>'
     + '<div class="r-row"><span>Nama Pemesan</span><b>' + esc(o.name || '—') + '</b></div>'
     + '<div class="r-row"><span>Model</span><b>' + o.item.name + '</b></div>'
     + '<div class="r-row"><span>Bahan</span><b>' + o.swatch.name + '</b></div>'
