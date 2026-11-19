@@ -8,21 +8,16 @@
 <title>Katalog &amp; Sistem Jahit UMKM — Atelier Nusantara</title>
 <style>
   :root{
-    --canvas:#FAF6EE; --panel:#FFFDF8; --panel2:#F3ECDD; --ink:#211D18; --ink2:#5C554B; --ink3:#857A6B;
-    --accent:#A34D08; --accent-dark:#7E3A06; --accent-soft:#F7E8C8; --line:#E6DCC8; --line2:#D5C7AB;
+    --canvas:#FAF8F5; --panel:#FFFFFF; --panel2:#F4F0E9; --ink:#211D18; --ink2:#5C554B; --ink3:#8A8175;
+    --accent:#A8502A; --accent-dark:#7E3A1E; --accent-soft:#F3E6DB; --line:#E9E4DA; --line2:#DDD5C6;
     --green:#2F6B33; --green-bg:#EFF4E4; --red:#A4261F;
     --serif:Georgia,'Times New Roman',Times,serif;
     --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
     --mono:ui-monospace,'SF Mono',SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace;
-    --hand:'Bradley Hand','Segoe Script','Segoe Print','Comic Sans MS',cursive;
-    --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.06'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
   }
   *,*::before,*::after{box-sizing:border-box;}
   html,body{height:100%;}
   body{margin:0;padding:0;background:var(--canvas);color:var(--ink);font-family:var(--sans);font-size:14px;line-height:1.45;-webkit-font-smoothing:antialiased;}
-  /* grain halus di seluruh canvas — kertas/kain, bukan layar steril */
-  body::after{content:"";position:fixed;inset:0;z-index:300;pointer-events:none;background-image:var(--grain);mix-blend-mode:multiply;opacity:.8;}
-  .app{background-image:radial-gradient(1200px 500px at 70% -10%,rgba(233,181,43,.07),transparent 60%),radial-gradient(900px 600px at -10% 110%,rgba(163,77,8,.05),transparent 55%);}
   button,[role="button"],select,input:not([type="checkbox"],[type="radio"]){min-height:2.25rem;}
   button{font-family:var(--sans);cursor:pointer;}
   input,select,textarea{font-family:var(--sans);font-size:14px;color:var(--ink);}
@@ -35,126 +30,84 @@
   /* ============ HEADER ============ */
   header{display:flex;align-items:stretch;gap:0;background:var(--panel);border-bottom:1px solid var(--line2);height:56px;min-height:56px;}
   .brand{display:flex;align-items:center;gap:10px;padding:0 16px;border-right:1px solid var(--line);min-width:0;}
-  .brand-mark{width:34px;height:34px;flex:none;background:var(--ink);color:#FDE68A;display:flex;align-items:center;justify-content:center;border-radius:6px;}
+  .brand-mark{width:34px;height:34px;flex:none;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;border-radius:6px;}
   .brand h1{font-family:var(--serif);font-size:15px;font-weight:700;letter-spacing:.04em;margin:0;white-space:nowrap;}
   .brand p{margin:0;font-size:10.5px;color:var(--ink2);letter-spacing:.02em;white-space:nowrap;}
   .tabs{display:flex;align-items:stretch;flex:none;}
   .tab{border:0;background:transparent;padding:0 16px;font-size:13px;font-weight:600;color:var(--ink2);border-bottom:3px solid transparent;display:flex;align-items:center;gap:7px;min-height:56px;}
   .tab:hover{color:var(--ink);background:var(--panel2);}
-  .tab.active{color:var(--accent-dark);border-bottom-color:var(--accent);background:#FFFBEB;}
+  .tab.active{color:var(--accent-dark);border-bottom-color:var(--accent);background:var(--accent-soft);}
   .search-wrap{display:flex;align-items:center;flex:1;padding:0 14px;min-width:120px;}
   .search-box{display:flex;align-items:center;gap:8px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:0 12px;width:100%;max-width:520px;height:38px;}
   .search-box:focus-within{border-color:var(--accent);background:#fff;}
   .search-box svg{flex:none;color:var(--ink3);}
   .search-box input{border:0;background:transparent;outline:none;width:100%;min-height:0;height:36px;}
   .queue{display:flex;align-items:center;gap:10px;padding:0 16px;border-left:1px solid var(--line);flex:none;}
-  .queue .dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px #DCFCE7;}
+  .queue .dot{width:8px;height:8px;border-radius:50%;background:var(--green);}
   .queue b{font-family:var(--mono);font-size:15px;}
   .queue span{font-size:11px;color:var(--ink2);line-height:1.25;}
 
   /* ============ LEFT RAIL ============ */
   .rail{background:var(--panel);border-right:1px solid var(--line);overflow-y:auto;min-height:0;display:flex;flex-direction:column;}
-  .rail-sec{padding:16px 16px 6px;}
-  .rail h2{font-size:12.5px;letter-spacing:.1em;font-variant:small-caps;color:var(--ink3);margin:0 0 10px;font-weight:700;}
-  .cat-btn{display:flex;align-items:center;justify-content:space-between;width:100%;text-align:left;background:transparent;border:1px solid transparent;border-radius:8px;padding:9px 10px;font-size:13.5px;color:var(--ink);margin-bottom:2px;min-height:40px;}
+  .rail-sec{padding:14px 16px 2px;}
+  .rail h2{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);margin:0 0 8px;font-weight:700;}
+  .cat-btn{display:flex;align-items:center;justify-content:space-between;width:100%;text-align:left;background:transparent;border:0;border-radius:7px;padding:6px 10px;font-size:13px;color:var(--ink);margin-bottom:1px;min-height:32px;}
   .cat-btn:hover{background:var(--panel2);}
-  .cat-btn.active{background:var(--accent-soft);border-color:#FDE68A;color:var(--accent-dark);font-weight:700;}
-  .cat-btn .cnt{font-family:var(--mono);font-size:11px;background:var(--panel2);border:1px solid var(--line);border-radius:99px;padding:1px 8px;color:var(--ink2);}
-  .cat-btn.active .cnt{background:#fff;border-color:#FDE68A;color:var(--accent-dark);}
-  .check-row{display:flex;align-items:center;gap:9px;padding:7px 10px;border-radius:8px;cursor:pointer;font-size:13.5px;min-height:36px;}
+  .cat-btn.active{background:var(--accent-soft);color:var(--accent-dark);font-weight:700;}
+  .cat-btn .cnt{font-family:var(--mono);font-size:11px;color:var(--ink3);}
+  .cat-btn.active .cnt{color:var(--accent-dark);}
+  .check-row{display:flex;align-items:center;gap:8px;padding:4px 10px;border-radius:7px;cursor:pointer;font-size:12.5px;min-height:28px;color:var(--ink2);}
   .check-row:hover{background:var(--panel2);}
-  .check-row input{width:17px;height:17px;accent-color:var(--accent);flex:none;margin:0;}
-  .check-row .cnt{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--ink3);}
-  .radio-row{display:flex;align-items:center;gap:9px;padding:7px 10px;border-radius:8px;cursor:pointer;font-size:13.5px;min-height:36px;}
+  .check-row input{width:15px;height:15px;accent-color:var(--accent);flex:none;margin:0;}
+  .radio-row{display:flex;align-items:center;gap:8px;padding:4px 10px;border-radius:7px;cursor:pointer;font-size:12.5px;min-height:28px;color:var(--ink2);}
   .radio-row:hover{background:var(--panel2);}
-  .radio-row input{width:17px;height:17px;accent-color:var(--accent);flex:none;margin:0;}
-  .workshop{margin:auto 12px 12px;background:#2A2118;color:#FAF6EE;border-radius:10px;padding:14px;box-shadow:3px 4px 0 rgba(60,45,25,.12);position:relative;overflow:hidden;}
-  .workshop::after{content:"";position:absolute;inset:0;background-image:var(--grain);pointer-events:none;}
-  .workshop h3{font-family:var(--serif);font-size:14px;margin:0 0 8px;color:#FDE68A;letter-spacing:.02em;}
-  .workshop .slot{display:flex;align-items:baseline;gap:8px;margin-bottom:6px;}
-  .workshop .slot b{font-family:var(--mono);font-size:26px;color:#fff;}
-  .workshop .slot span{font-size:12px;color:#D6D3D1;}
-  .slotbar{height:6px;background:#44403C;border-radius:99px;overflow:hidden;margin:4px 0 10px;}
-  .slotbar i{display:block;height:100%;width:33%;background:var(--accent);border-radius:99px;}
-  .workshop p{margin:0 0 5px;font-size:12px;color:#E7E5E4;line-height:1.5;}
-  .workshop p b{color:#fff;font-weight:600;}
-  .workshop .addr{color:#A8A29E;font-size:11.5px;}
+  .radio-row input{width:15px;height:15px;accent-color:var(--accent);flex:none;margin:0;}
+  .workshop{margin:auto 16px 16px;background:var(--panel2);border-radius:10px;padding:14px;}
+  .workshop h3{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);margin:0 0 10px;font-weight:700;}
+  .workshop .slot{display:flex;align-items:baseline;gap:8px;margin-bottom:8px;}
+  .workshop .slot b{font-family:var(--mono);font-size:24px;color:var(--accent-dark);}
+  .workshop .slot span{font-size:12px;color:var(--ink2);}
+  .workshop p{margin:0 0 4px;font-size:12px;color:var(--ink2);line-height:1.5;}
+  .workshop p b{color:var(--ink);font-weight:600;}
+  .workshop .addr{color:var(--ink3);}
 
   /* ============ CENTER ============ */
   .center{overflow-y:auto;min-height:0;min-width:0;background:var(--canvas);}
-  .center-head{padding:22px 22px 4px;display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px;}
-  .center-head h2{font-family:var(--serif);font-size:24px;margin:0 0 4px;font-weight:700;}
-  .center-head p{margin:0;color:var(--ink2);font-size:13px;max-width:560px;}
-  .display-tag{font-family:var(--serif);font-size:clamp(27px,3.2vw,39px);line-height:1.04;letter-spacing:-.022em;font-weight:700;margin:0 0 8px;color:var(--ink);max-width:640px;}
-  .display-tag em{font-style:italic;color:var(--accent-dark);}
-  .story-line{font-size:13px;color:var(--ink2);max-width:600px;line-height:1.6;margin:0 0 14px;}
-  .story-line b{color:var(--ink);}
-  .hand-note{font-family:var(--hand);color:var(--accent-dark);font-size:14.5px;line-height:1.3;display:inline-block;transform:rotate(-1.3deg);}
-  /* strip paling laris */
-  .laris-strip{margin:14px 22px 0;background:#2A2118;color:#F3E9D2;border-radius:10px;padding:11px 16px;display:flex;flex-wrap:wrap;align-items:center;gap:8px 22px;box-shadow:3px 4px 0 rgba(60,45,25,.10);}
-  .laris-strip .ls-title{font-variant:small-caps;letter-spacing:.08em;font-size:13px;font-weight:700;color:#EBCB7A;white-space:nowrap;}
-  .laris-strip .ls-item{font-size:12.5px;color:#E9DFC9;}
-  .laris-strip .ls-item b{font-family:var(--mono);font-weight:700;color:#fff;}
-  /* kartu featured */
-  .featured{margin:14px 22px 0;background:var(--panel);border:1px solid var(--line2);border-radius:12px;display:grid;grid-template-columns:minmax(220px,300px) 1fr;overflow:hidden;box-shadow:5px 7px 0 rgba(60,45,25,.06),0 18px 30px -22px rgba(60,45,25,.45);}
-  .featured-art{min-height:230px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;border-right:1px solid var(--line);}
-  .featured-art svg{height:210px;width:auto;position:relative;z-index:1;}
-  .featured-art::after,.card-art::after{content:"";position:absolute;inset:0;background-image:var(--grain),repeating-linear-gradient(0deg,rgba(70,48,20,.035) 0 1px,transparent 1px 4px),repeating-linear-gradient(90deg,rgba(70,48,20,.03) 0 1px,transparent 1px 4px);}
-  .featured-body{padding:18px 20px;display:flex;flex-direction:column;gap:8px;}
-  .featured-body .f-kicker{font-variant:small-caps;letter-spacing:.09em;font-size:12.5px;font-weight:700;color:var(--accent-dark);}
-  .featured-body h3{font-family:var(--serif);font-size:23px;margin:0;line-height:1.2;}
-  .featured-body p{margin:0;font-size:13.5px;color:var(--ink2);line-height:1.6;max-width:520px;}
-  .featured-foot{margin-top:auto;display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap;border-top:1px dashed var(--line2);padding-top:12px;}
-  .featured-foot .price b{font-size:19px;}
-  .stamp{position:absolute;bottom:12px;right:12px;z-index:2;border:2px solid rgba(164,38,31,.6);color:rgba(164,38,31,.78);font-size:9.5px;font-weight:800;letter-spacing:.16em;padding:4px 8px 3px;border-radius:3px;transform:rotate(-6deg);text-transform:uppercase;background:rgba(255,253,248,.4);box-shadow:inset 0 0 0 1px rgba(164,38,31,.18);}
-  /* testimoni */
-  .testi-wrap{padding:2px 22px 30px;}
-  .testi-wrap>h3{font-family:var(--serif);font-size:19px;margin:6px 0 4px;}
-  .testi-wrap>.t-sub{font-size:12.5px;color:var(--ink2);margin:0 0 12px;}
-  .testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
-  .testi{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 15px;box-shadow:2px 3px 0 rgba(60,45,25,.05);}
-  .testi:nth-child(2){transform:rotate(.35deg);}
-  .testi:nth-child(3){transform:rotate(-.3deg);}
-  .testi p{margin:0 0 9px;font-size:13px;line-height:1.6;color:var(--ink);}
-  .testi .who{font-size:12px;color:var(--ink2);}
-  .testi .who b{color:var(--ink);}
-  .testi .who .mono{font-family:var(--mono);font-size:11px;color:var(--accent-dark);}
-  .sort-wrap{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink2);}
+  .center-head{padding:24px 24px 2px;display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px;}
+  .center-head h2{font-family:var(--serif);font-size:20px;margin:0 0 4px;font-weight:700;}
+  .center-head p{margin:0;color:var(--ink2);font-size:12px;max-width:560px;}
+  .sort-wrap{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink2);}
   .sort-wrap select{border:1px solid var(--line2);border-radius:8px;background:#fff;padding:0 10px;height:38px;}
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(232px,1fr));gap:14px;padding:16px 22px 26px;}
-  .card{background:var(--panel);border:1px solid var(--line);border-radius:10px 13px 11px 12px;overflow:hidden;display:flex;flex-direction:column;transition:border-color .15s, box-shadow .15s;box-shadow:2px 3px 0 rgba(60,45,25,.045),0 12px 20px -16px rgba(60,45,25,.35);}
-  .card:nth-child(3n+2){box-shadow:-2px 4px 0 rgba(60,45,25,.04),0 14px 22px -15px rgba(60,45,25,.32);}
-  .card:nth-child(4n+3){box-shadow:3px 2px 0 rgba(60,45,25,.05),0 10px 24px -13px rgba(60,45,25,.38);}
-  .card:hover{border-color:var(--line2);box-shadow:3px 5px 0 rgba(60,45,25,.06),0 16px 26px -14px rgba(60,45,25,.4);}
-  .card.selected{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent),3px 5px 0 rgba(163,77,8,.12);}
-  .card-art{height:164px;display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--line);position:relative;overflow:hidden;}
-  .card-art svg{height:146px;width:auto;position:relative;z-index:1;filter:drop-shadow(3px 5px 4px rgba(43,30,12,.22));}
-  .card:nth-child(odd) .card-art svg{transform:rotate(-.6deg);}
-  .card:nth-child(3n) .card-art svg{transform:rotate(.7deg);}
-  .card-tag{position:absolute;top:10px;left:10px;z-index:2;background:rgba(255,253,248,.94);border:1px solid var(--line2);border-radius:3px;font-size:10px;font-weight:700;letter-spacing:.07em;padding:3px 8px;color:var(--accent-dark);text-transform:uppercase;transform:rotate(-1deg);}
-  .card-xp{position:absolute;top:10px;right:10px;z-index:2;background:var(--ink);color:#EBCB7A;border-radius:3px;font-size:10px;font-weight:700;letter-spacing:.05em;padding:3px 8px;transform:rotate(1deg);}
-  .card-body{padding:13px 14px 14px;display:flex;flex-direction:column;gap:7px;flex:1;}
+  .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;padding:20px 24px 28px;}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;transition:border-color .15s;}
+  .card:hover{border-color:var(--line2);}
+  .card.selected{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent);}
+  .card-art{height:196px;display:flex;align-items:center;justify-content:center;background:var(--panel2);}
+  .card-art svg{height:178px;width:auto;}
+  .card-body{padding:16px 18px 18px;display:flex;flex-direction:column;gap:8px;flex:1;}
   .card-body h3{font-family:var(--serif);font-size:16px;margin:0;line-height:1.3;}
-  .card-body .desc{font-size:12.5px;color:var(--ink2);margin:0;line-height:1.5;}
-  .card-meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px;}
-  .chip{font-size:11px;background:var(--panel2);border:1px solid var(--line);border-radius:4px;padding:3px 8px;color:var(--ink2);font-family:var(--mono);}
-  .chip.sewn{background:#2A2118;border-color:#2A2118;color:#EBCB7A;font-weight:700;}
-  .card .hand-note{margin-top:1px;}
-  .card-foot{margin-top:auto;padding-top:8px;border-top:1px dashed var(--line2);display:flex;align-items:flex-end;justify-content:space-between;gap:8px;}
-  .price small{display:block;font-size:11.5px;color:var(--ink3);letter-spacing:.07em;font-variant:small-caps;font-weight:700;}
-  .price b{font-family:var(--mono);font-size:16.5px;font-weight:700;letter-spacing:-.02em;color:var(--accent-dark);}
-  .pick-btn{background:var(--ink);color:#fff;border:0;border-radius:8px;padding:0 13px;font-size:12.5px;font-weight:700;min-height:38px;white-space:nowrap;}
+  .card-body .desc{font-size:12px;color:var(--ink2);margin:0;line-height:1.5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .card-meta{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:2px;}
+  .chip{font-size:12px;background:var(--panel2);border-radius:4px;padding:3px 8px;color:var(--ink2);}
+  .chip.xp{background:transparent;padding:3px 0;display:inline-flex;align-items:center;gap:5px;}
+  .chip.xp i{width:6px;height:6px;border-radius:50%;background:var(--accent);flex:none;}
+  .card-foot{margin-top:auto;padding-top:12px;display:flex;align-items:flex-end;justify-content:space-between;gap:8px;}
+  .price small{display:block;font-size:12px;color:var(--ink3);margin-bottom:2px;}
+  .price b{font-family:var(--mono);font-size:16px;font-weight:700;letter-spacing:-.02em;color:var(--accent-dark);}
+  .pick-btn{background:var(--ink);color:#fff;border:0;border-radius:8px;padding:0 13px;font-size:12px;font-weight:700;min-height:38px;white-space:nowrap;}
   .pick-btn:hover{background:var(--accent-dark);}
   .card.selected .pick-btn{background:var(--accent);}
+  .testi-line{padding:0 24px 30px;margin:0;font-size:12px;color:var(--ink2);}
+  .testi-line b{color:var(--accent-dark);font-weight:700;}
   .empty{grid-column:1/-1;text-align:center;padding:48px 20px;color:var(--ink2);}
-  .empty h3{font-family:var(--serif);font-size:19px;color:var(--ink);margin:0 0 6px;}
+  .empty h3{font-family:var(--serif);font-size:16px;color:var(--ink);margin:0 0 6px;}
   .empty button{margin-top:12px;background:#fff;border:1px solid var(--line2);border-radius:8px;padding:0 16px;font-weight:600;}
 
   /* Kalkulator & Panduan views */
   .view-pane{padding:20px 22px 30px;display:none;}
   .view-pane.show{display:block;}
   .calc-card,.guide-card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:20px;max-width:760px;}
-  .calc-card h2,.guide-card h2{font-family:var(--serif);font-size:22px;margin:0 0 6px;}
+  .calc-card h2,.guide-card h2{font-family:var(--serif);font-size:20px;margin:0 0 6px;}
   .calc-card>p,.guide-card>p{color:var(--ink2);margin:0 0 16px;font-size:13.5px;}
   .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
   .field label{display:block;font-size:12.5px;font-weight:700;letter-spacing:.07em;font-variant:small-caps;color:var(--ink2);margin-bottom:5px;}
@@ -165,7 +118,7 @@
   .calc-result .big{font-family:var(--mono);font-size:26px;font-weight:700;color:#166534;}
   .calc-result p{margin:4px 0 0;font-size:13px;color:#14532D;line-height:1.55;}
   table.size{width:100%;border-collapse:collapse;font-size:13px;margin-top:6px;}
-  table.size th{background:var(--ink);color:#FDE68A;text-align:left;padding:9px 10px;font-size:12px;letter-spacing:.03em;}
+  table.size th{background:var(--ink);color:#fff;text-align:left;padding:9px 10px;font-size:12px;letter-spacing:.03em;}
   table.size td{padding:8px 10px;border-bottom:1px solid var(--line);font-family:var(--mono);}
   table.size td:first-child{font-family:var(--sans);font-weight:700;}
   table.size tr:hover td{background:var(--panel2);}
@@ -175,16 +128,14 @@
   .guide-box ol,.guide-box ul{margin:0;padding-left:18px;font-size:13px;color:var(--ink2);line-height:1.7;}
 
   /* ============ RIGHT WORKBENCH ============ */
-  .bench{background:var(--panel);border-left:1px solid var(--line2);overflow-y:auto;min-height:0;}
-  .bench-sec{padding:16px 18px;border-bottom:1px solid var(--line);}
-  .bench-sec h2{font-size:12.5px;letter-spacing:.1em;font-variant:small-caps;color:var(--ink3);margin:0 0 12px;font-weight:700;display:flex;justify-content:space-between;align-items:center;}
-  .bench-sec h2 .live{color:var(--green);letter-spacing:0;text-transform:none;font-size:11px;font-weight:600;}
+  .bench{background:var(--panel);border-left:1px solid var(--line);overflow-y:auto;min-height:0;}
+  .bench-sec{padding:22px 20px;}
+  .bench-sec h2{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);margin:0 0 14px;font-weight:700;}
   .preview{display:flex;gap:14px;align-items:center;}
-  .preview-art{width:118px;height:138px;flex:none;border:1px solid var(--line2);border-radius:9px;display:flex;align-items:center;justify-content:center;overflow:hidden;transition:background .25s;position:relative;box-shadow:2px 3px 0 rgba(60,45,25,.07);}
-  .preview-art::after{content:"";position:absolute;inset:0;background-image:var(--grain);}
-  .preview-art svg{height:124px;width:auto;position:relative;z-index:1;filter:drop-shadow(2px 4px 3px rgba(43,30,12,.22));}
+  .preview-art{width:118px;height:138px;flex:none;border-radius:9px;background:var(--panel2);display:flex;align-items:center;justify-content:center;overflow:hidden;}
+  .preview-art svg{height:124px;width:auto;}
   .preview-info{min-width:0;}
-  .preview-info h3{font-family:var(--serif);font-size:17px;margin:0 0 3px;line-height:1.3;}
+  .preview-info h3{font-family:var(--serif);font-size:16px;margin:0 0 3px;line-height:1.3;}
   .preview-info p{margin:0 0 6px;font-size:12px;color:var(--ink2);line-height:1.5;}
   .preview-info .mono{font-family:var(--mono);font-size:12px;color:var(--accent-dark);font-weight:700;}
   .swatches{display:flex;gap:9px;margin-top:12px;flex-wrap:wrap;}
@@ -196,14 +147,14 @@
   .preset-row{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;}
   .preset{flex:1;border:1px solid var(--line2);background:#fff;border-radius:8px;font-weight:700;font-size:13px;min-height:38px;min-width:48px;}
   .preset:hover{border-color:var(--accent);color:var(--accent-dark);}
-  .preset.active{background:var(--ink);color:#FDE68A;border-color:var(--ink);}
+  .preset.active{background:var(--ink);color:#fff;border-color:var(--ink);}
   .meas-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
   .meas label{display:block;font-size:11px;font-weight:600;color:var(--ink2);margin-bottom:4px;}
   .meas .inwrap{display:flex;align-items:center;border:1px solid var(--line2);border-radius:8px;background:#fff;overflow:hidden;}
   .meas .inwrap:focus-within{border-color:var(--accent);}
   .meas input{border:0;outline:none;width:100%;padding:0 10px;height:38px;font-family:var(--mono);font-size:14px;min-height:0;}
   .meas .unit{font-size:11px;color:var(--ink3);padding-right:9px;font-family:var(--mono);}
-  .size-hint{margin-top:10px;font-size:12px;background:#FFFBEB;border:1px solid #FDE68A;border-radius:8px;padding:8px 11px;color:var(--accent-dark);display:none;}
+  .size-hint{margin-top:10px;font-size:12px;background:var(--accent-soft);border-radius:8px;padding:8px 11px;color:var(--accent-dark);display:none;}
   .size-hint.show{display:block;}
   .seg{display:flex;border:1px solid var(--line2);border-radius:9px;overflow:hidden;margin-bottom:10px;}
   .seg button{flex:1;border:0;background:#fff;padding:9px 6px;font-size:12.5px;font-weight:600;color:var(--ink2);min-height:42px;line-height:1.3;}
@@ -225,7 +176,7 @@
   .bill-row b{font-family:var(--mono);font-weight:600;text-align:right;}
   .bill-total{display:flex;justify-content:space-between;align-items:center;padding:12px 13px;background:var(--ink);color:#fff;}
   .bill-total span{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#D6D3D1;}
-  .bill-total b{font-family:var(--mono);font-size:19px;color:#FDE68A;}
+  .bill-total b{font-family:var(--mono);font-size:20px;color:#fff;}
   .eta{font-size:12px;color:var(--ink2);margin-top:9px;text-align:center;}
   .eta b{color:var(--ink);}
   .bench .field{margin-bottom:10px;}
@@ -266,6 +217,7 @@
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 
   /* ============ RESPONSIVE ============ */
+  @media (max-width:1400px){ .grid{grid-template-columns:repeat(2,minmax(0,1fr));} }
   @media (max-width:1240px){ .main{grid-template-columns:230px minmax(0,1fr) 340px;} .brand p{display:none;} }
   @media (max-width:960px){
     .app{height:auto;min-height:100dvh;overflow:visible;display:block;}
@@ -280,14 +232,9 @@
     .center{order:1;overflow:visible;}
     .bench{order:2;border-left:0;border-top:2px solid var(--line2);overflow:visible;}
     .rail{order:3;border-right:0;border-top:1px solid var(--line);overflow:visible;}
-    .grid{grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));padding:14px;}
+    .grid{grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));padding:16px 14px 22px;}
     .center-head,.view-pane{padding-left:14px;padding-right:14px;}
-    .laris-strip,.featured{margin-left:14px;margin-right:14px;}
-    .featured{grid-template-columns:1fr;}
-    .featured-art{border-right:0;border-bottom:1px solid var(--line);min-height:200px;}
-    .testi-wrap{padding-left:14px;padding-right:14px;}
-    .testi-grid{grid-template-columns:1fr;}
-    .testi:nth-child(2),.testi:nth-child(3){transform:none;}
+    .testi-line{padding-left:14px;padding-right:14px;}
     .form-grid,.guide-cols{grid-template-columns:1fr;}
     .card-foot{flex-direction:column;align-items:stretch;}
     .pick-btn{width:100%;white-space:normal;}
@@ -321,10 +268,10 @@
         <input id="searchInput" type="search" placeholder="Cari model… mis. batik, gamis, jas, permak" aria-label="Cari model jahitan">
       </div>
     </div>
-    <div class="queue" title="Pesanan yang sedang dikerjakan workshop — terakhir masuk: Mba Rina, kebaya wisuda">
+    <div class="queue" title="Pesanan yang sedang dikerjakan workshop">
       <span class="dot" aria-hidden="true"></span>
       <b id="queueCount">3</b>
-      <span>Antrean Aktif<br><span style="color:var(--ink3)">terakhir: Mba Rina</span></span>
+      <span>Antrean Aktif</span>
     </div>
   </header>
 
@@ -343,51 +290,23 @@
         <h2>Kecepatan Produksi</h2>
         <label class="radio-row"><input type="radio" name="speed" value="semua" checked> Semua Kecepatan</label>
         <label class="radio-row"><input type="radio" name="speed" value="reguler"> Reguler · 7–10 Hari</label>
-        <label class="radio-row"><input type="radio" name="speed" value="ekspres"> Ekspres · 3 Hari <span class="cnt" style="margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--ink3)">bisa kilat</span></label>
+        <label class="radio-row"><input type="radio" name="speed" value="ekspres"> Ekspres · 3 Hari</label>
       </div>
       <div class="workshop">
-        <h3>Workshop Hari Ini</h3>
-        <div class="slot"><b>4</b><span>Slot Jahit Tersisa<br>Minggu Ini</span></div>
-        <div class="slotbar" aria-hidden="true"><i></i></div>
-        <p>Antrean: <b>3 pesanan</b> — terakhir masuk: Mba Rina, kebaya wisuda.</p>
+        <h3>Status Workshop</h3>
+        <div class="slot"><b>4</b><span>Slot Jahit Tersisa Minggu Ini</span></div>
         <p>Estimasi selesai pesanan baru: <b id="workshopEta">Rabu, 26 Nov 2026</b></p>
-        <p class="addr">Jl. Raya Ciputat No. 47, seberang Pasar Ciputat — patokan warung kopi Pak Haji, pagar hijau.<br>Buka Senin–Jumat 08.00–17.00 · Sabtu sampai 15.00 · Minggu tutup, mesin istirahat.</p>
-        <p class="addr" style="margin-top:6px">Penjahit utama: Bu Sari (sejak 2012). Khusus jas dibantu Pak Budi.</p>
+        <p class="addr">Jl. Raya Ciputat No. 47, Ciputat</p>
       </div>
     </aside>
 
     <!-- ================= CENTER ================= -->
     <section class="center" id="centerScroll">
       <div id="viewKatalog">
-        <div style="padding:24px 22px 0">
-          <p class="display-tag">Dijahit satu-satu, <em>bukan massal.</em></p>
-          <p class="story-line">Workshop kami mulai tahun 2012 dari <b>satu mesin jahit di teras rumah</b>. Sekarang ada 4 mesin dan 2 meja potong, tapi caranya tetap sama: <b>Bu Sari</b> yang mengukur, memotong pola, dan memeriksa jahitan terakhir sebelum bajumu dibungkus. Khusus jas, bahu dan kerahnya dikerjakan <b>Pak Budi</b> — beliau memang cuma mau pegang jas.</p>
-        </div>
-        <div class="laris-strip" role="note" aria-label="Paling laris minggu ini">
-          <span class="ls-title">Paling Laris Minggu Ini</span>
-          <span class="ls-item">Kemeja Batik Mega Mendung — <b>212× dijahit sejak 2023</b></span>
-          <span class="ls-item">Gamis Linen Harian — <b>148×</b></span>
-          <span class="ls-item">Permak Kilat — <b>96× bulan ini</b></span>
-        </div>
-        <div class="featured" aria-label="Model terlaris">
-          <div class="featured-art" style="background:#F3E3D3" id="featuredArt">
-            <span class="stamp">Jahitan Tangan</span>
-          </div>
-          <div class="featured-body">
-            <span class="f-kicker">Yang paling sering dipesan ulang</span>
-            <h3>Kemeja Batik Mega Mendung</h3>
-            <p>Sudah <b>212 kali dijahit sejak 2023</b> — kebanyakan untuk seragam kantor dan acara keluarga. Batik tulisnya kami selaraskan manual di bagian kancing, makanya butuh kain sedikit lebih banyak dari kemeja biasa. Furingnya katun tipis, tidak gerah dipakai seharian.</p>
-            <span class="hand-note">motif disejajarkan manual ✎ — Bu Sari</span>
-            <div class="featured-foot">
-              <div class="price"><small>Ongkos Jahit Mulai</small><b>Rp 127.500</b></div>
-              <button type="button" class="pick-btn" id="featuredPick" style="min-height:42px;padding:0 18px">Pilih &amp; Custom Ukuran</button>
-            </div>
-          </div>
-        </div>
         <div class="center-head">
           <div>
             <h2 id="catalogTitle">Semua Model</h2>
-            <p id="catalogSub">12 model yang biasa kami jahit di workshop — pilih modelnya, atur ukuran badanmu di panel kanan, ongkosnya langsung kelihatan.</p>
+            <p id="catalogSub">12 model jahitan workshop Bu Sari — pilih modelnya, atur ukuran di panel kanan.</p>
           </div>
           <div class="sort-wrap">
             <label for="sortSel">Urutkan</label>
@@ -400,25 +319,7 @@
           </div>
         </div>
         <div class="grid" id="catalogGrid"></div>
-        <div class="testi-wrap">
-          <h3>Kata yang sudah pernah jahit di sini</h3>
-          <p class="t-sub">Ditulis apa adanya dari buku catatan pesanan &amp; chat pelanggan (nama disamarkan seizin mereka).</p>
-          <div class="testi-grid">
-            <div class="testi">
-              <p>“Kebaya wisuda anak saya selesai 2 hari lebih cepat. Di bagian pinggang dikasih kelonggaran sedikit kata Bu Sari, ‘biar bisa duduk lama pas acara’ — beneran kepakai.”</p>
-              <div class="who"><b>Bu Hartini</b> · Ciputat · <span class="mono">Kebaya Kartini Brokat</span></div>
-            </div>
-            <div class="testi">
-              <p>“Jas saya fitting dua kali, bahu kanan saya memang lebih turun. Pak Budi yang betulin polanya, hasilnya jatuh pas, nggak narik pas salaman.”</p>
-              <div class="who"><b>Pak Dedi S.</b> · Pamulang · <span class="mono">Jas Formal Full Furing</span></div>
-            </div>
-            <div class="testi">
-              <p>“Udah 3x permak celana di sini. Cepet, jahitannya rapi, dan dikasih tahu dulu kalau kainnya sudah tipis — nggak asal terima.”</p>
-              <div class="who"><b>Mba Rina</b> · Tangerang Selatan · <span class="mono">Permak &amp; Vermak Kilat</span></div>
-            </div>
-          </div>
-          <p class="hand-note" style="margin-top:14px">terima kasih sudah percaya sama workshop kecil kami ✎</p>
-        </div>
+        <p class="testi-line"><b>★ 4.9</b> dari 214 pelanggan — “Kebayanya pas banget.” — Rina, Ciputat</p>
       </div>
 
       <div class="view-pane" id="viewKalkulator">
@@ -488,7 +389,7 @@
     <!-- ================= RIGHT WORKBENCH ================= -->
     <aside class="bench" aria-label="Panel custom order dan ukuran">
       <div class="bench-sec">
-        <h2>Model Terpilih <span class="live">● Live Preview</span></h2>
+        <h2>Model Terpilih</h2>
         <div class="preview">
           <div class="preview-art" id="previewArt"></div>
           <div class="preview-info">
@@ -522,7 +423,7 @@
       </div>
 
       <div class="bench-sec">
-        <h2>Estimasi Harga <span class="live">Terhitung Otomatis</span></h2>
+        <h2>Estimasi Harga</h2>
         <div class="seg" role="group" aria-label="Sumber kain">
           <button type="button" id="segOwn" class="active">Bawa Kain Sendiri<small>hanya bayar ongkos jahit</small></button>
           <button type="button" id="segShop">Kain dari Penjahit<small>termasuk biaya bahan</small></button>
@@ -764,8 +665,7 @@ function renderCats(){
 function renderFabrics(){
   var html = '';
   Object.keys(FABRICS).forEach(function(k){
-    var n = ITEMS.filter(function(i){ return i.fabric===k; }).length;
-    html += '<label class="check-row"><input type="checkbox" data-fabric="'+k+'"'+(state.fabrics[k]?' checked':'')+'> '+FABRICS[k].name+'<span class="cnt">'+n+'</span></label>';
+    html += '<label class="check-row"><input type="checkbox" data-fabric="'+k+'"'+(state.fabrics[k]?' checked':'')+'> '+FABRICS[k].name+'</label>';
   });
   $('fabricList').innerHTML = html;
   var boxes = $('fabricList').querySelectorAll('input[type=checkbox]');
@@ -796,7 +696,7 @@ function renderGrid(){
   var list = visibleItems();
   var title = state.cat==='semua' ? 'Semua Model' : CAT_LABEL[state.cat];
   $('catalogTitle').textContent = title;
-  $('catalogSub').textContent = 'Ada ' + list.length + ' dari 12 model' + (state.search ? ' untuk pencarian “'+state.search+'”' : '') + ' yang biasa kami jahit. Pilih modelnya, atur ukuran badanmu di panel kanan — ongkosnya langsung kelihatan, tidak pakai tanya-tanya dulu.';
+  $('catalogSub').textContent = list.length + ' dari 12 model' + (state.search ? ' untuk pencarian “'+state.search+'”' : '') + ' — pilih modelnya, atur ukuran di panel kanan.';
   if(!list.length){
     $('catalogGrid').innerHTML = '<div class="empty"><h3>Tidak ada model yang cocok</h3><p>Coba longgarkan filter kain / kecepatan, atau ganti kata kunci pencarian.</p><button type="button" id="resetFilter">Reset Semua Filter</button></div>';
     $('resetFilter').addEventListener('click', resetFilters);
@@ -805,13 +705,11 @@ function renderGrid(){
   var html = '';
   list.forEach(function(it){
     html += '<article class="card'+(state.item.id===it.id?' selected':'')+'" data-id="'+it.id+'">'
-      + '<div class="card-art" style="background:'+it.bg+'">' + garmentSVG(it.type, it.color, it.pat || 'plain', 'c'+it.id)
-      + '<span class="card-tag">'+CAT_LABEL[it.cat].split(' ')[0]+'</span>'
-      + (it.express ? '<span class="card-xp">EKSPRES 3 HARI</span>' : '')
-      + (it.stamp ? '<span class="stamp">Jahitan Tangan</span>' : '')
+      + '<div class="card-art">' + garmentSVG(it.type, it.color, it.pat || 'plain', 'c'+it.id)
       + '</div><div class="card-body"><h3>'+it.name+'</h3><p class="desc">'+it.desc+'</p>'
-      + (it.note ? '<span class="hand-note">'+it.note+'</span>' : '')
-      + '<div class="card-meta"><span class="chip sewn">'+it.sewn+'</span><span class="chip">'+FABRICS[it.fabric].name+'</span><span class="chip">'+(it.meters>0 ? 'Butuh '+String(it.meters).replace('.',',')+'m kain' : 'Tanpa kain baru')+'</span><span class="chip">± '+it.days+' hari kerja</span></div>'
+      + '<div class="card-meta"><span class="chip">'+FABRICS[it.fabric].name+'</span><span class="chip">± '+it.days+' hari kerja</span>'
+      + (it.express ? '<span class="chip xp"><i></i>Ekspres</span>' : '')
+      + '</div>'
       + '<div class="card-foot"><div class="price"><small>Ongkos Jahit Mulai</small><b>'+rp(it.fee)+'</b></div>'
       + '<button type="button" class="pick-btn" data-pick="'+it.id+'">'+(state.item.id===it.id?'✓ Terpilih':'Pilih & Custom Ukuran')+'</button></div>'
       + '</div></article>';
@@ -867,7 +765,6 @@ function renderSwatches(){
 }
 function renderBench(){
   var it = state.item, sw = state.swatch;
-  $('previewArt').style.background = it.bg;
   $('previewArt').innerHTML = garmentSVG(it.type, sw.color, sw.pattern, 'pv');
   $('pvName').textContent = it.name;
   $('pvDesc').textContent = CAT_LABEL[it.cat] + ' · ± ' + it.days + ' hari kerja' + (it.express ? ' · bisa ekspres 3 hari' : '');
@@ -1054,12 +951,6 @@ function switchTab(tab){
 /* ---------- Init & events ---------- */
 function init(){
   renderCats(); renderFabrics(); renderGrid(); renderBench(); renderCalcModels(); updateSizeHint();
-
-  /* kartu featured: ilustrasi model terlaris (id 1) + tombol pilih */
-  var fArt = $('featuredArt');
-  if(fArt){ fArt.innerHTML = garmentSVG(ITEMS[0].type, ITEMS[0].color, ITEMS[0].pat || 'plain', 'feat') + '<span class="stamp">Jahitan Tangan</span>'; }
-  var fPick = $('featuredPick');
-  if(fPick){ fPick.addEventListener('click', function(){ selectItem(1); switchTab('katalog'); }); }
 
   /* workshop ETA: 7 working-ish days ahead */
   $('workshopEta').textContent = fmtDate(addDays(7));
